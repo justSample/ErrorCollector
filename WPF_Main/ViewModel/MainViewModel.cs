@@ -1,4 +1,8 @@
 using GalaSoft.MvvmLight;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Linq;
+using WPF_Main.Models;
 
 namespace WPF_Main.ViewModel
 {
@@ -16,12 +20,22 @@ namespace WPF_Main.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+
+        public Users User { get; set; }
+
+        public ObservableCollection<Programs> Programs { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
-
+            using(error_collectorContext context = new error_collectorContext())
+            {
+                User = context.Users.FirstAsync().Result;
+                Programs = new ObservableCollection<Programs>(context.Programs.ToList());
+            }
+            
         }
     }
 }
