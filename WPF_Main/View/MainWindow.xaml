@@ -9,7 +9,7 @@
 		Width="800"
 		WindowStartupLocation="CenterScreen"
 		WindowStyle="None"
-		ResizeMode="NoResize"
+		
 		DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
 		>
 
@@ -30,8 +30,6 @@
             <!---->
             <RowDefinition/>
             <!---->
-            <RowDefinition MaxHeight="20"/>
-            <!--Footer-->
         </Grid.RowDefinitions>
 
         <!--Header-->
@@ -140,7 +138,7 @@
             <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="1" Background="#6D1B90" ItemsSource="{Binding Images}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding Image}"/>
+                        <Image Source="{Binding Image}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -149,12 +147,16 @@
 
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
                     <TextBlock Text="Создатель данных" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
                     <TextBlock Text="Причина" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding SelectedError.Description}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedError.Cause}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
                     <TextBlock Text="Решение" HorizontalAlignment="Center"/>
-                    <TextBlock Text="----------------------------------" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedError.Solution}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
 
                 </StackPanel>
 
@@ -177,18 +179,6 @@
 
         <!--#endregion-->
 
-        <!--Footer-->
-        <Grid Grid.Row="4" Grid.ColumnSpan="100" Background="#B21A67">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Column="0" Text="Connection status: failed"/>
-
-
-        </Grid>
 
     </Grid>
 </Window>

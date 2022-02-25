@@ -50,6 +50,10 @@ namespace WPF_Main.Models
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Cause)
+                    .HasColumnName("cause")
+                    .HasColumnType("mediumtext");
+
                 entity.Property(e => e.Comment)
                     .HasColumnName("comment")
                     .HasColumnType("mediumtext");
@@ -72,10 +76,6 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.Solution)
                     .HasColumnName("solution")
-                    .HasColumnType("mediumtext");
-
-                entity.Property(e => e.Сause)
-                    .HasColumnName("сause")
                     .HasColumnType("mediumtext");
 
                 entity.HasOne(d => d.IdProgramNavigation)

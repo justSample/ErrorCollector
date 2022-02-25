@@ -13,7 +13,7 @@ namespace WPF_Main.Models
         public int IdProgram { get; set; }
         public int IdUserCreated { get; set; }
         public string Name { get; set; }
-        public string Сause { get; set; }
+        public string Cause { get; set; }
         public string Solution { get; set; }
         public string Comment { get; set; }
         public byte[] Images { get; set; }

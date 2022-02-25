@@ -46,8 +46,117 @@
             </StackPanel>
 
         </Grid>
+
+        <!--Левая стенка-->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Top">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <!--Выбор программы-->
+            <Grid Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="0,2.5" Grid.Row="0" Text="Выбор программы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--Выбор программы-->
+                <ComboBox Margin="0,2.5" Grid.Row="1" ItemsSource="{Binding Programs}" DisplayMemberPath="Name"/>
+
+            </Grid>
+            <!--Наименование ошибки-->
+            <Grid Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="0,2.5" Grid.Row="0" Text="Наименование ошибки" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--Наименование ошибки-->
+                <TextBox Grid.Row="1" FontSize="16" Text="{Binding ErrorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </Grid>
+            <!--Причина-->
+            <Grid Grid.Row="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="0,2.5" Grid.Row="0" Text="Причина ошибки" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--Причина-->
+                <TextBox Grid.Row="2" FontSize="16" Text="{Binding CauseError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <!--Решение-->
+            <Grid Grid.Row="3">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="0,2.5" Grid.Row="0" Text="Решение ошибки" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--Решение-->
+                <TextBox Grid.Row="3" FontSize="16" Text="{Binding SolutionError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <!--Комментарий-->
+            <Grid Grid.Row="4">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="0,2.5" Grid.Row="0" Text="Комментарий от себя" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--Комментарий-->
+                <TextBox Grid.Row="4" FontSize="16" Text="{Binding CommentError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <!--Добавить изображения ошибки-->
+            <Grid Grid.Row="5">
+                <Button Margin="0,5" Content="Добавить изображения" FontSize="16" Command="{Binding SetImage}"/>
+            </Grid>
+
+            
+
+        </Grid>
         
         
+        <!--Правая стенка-->
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+            <!--Изображения-->
+            <ListView Margin="2" ItemsSource="{Binding Images}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Image}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <!--Кнопки закрытия-->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="1" VerticalAlignment="Bottom">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="1" Content="Добавить ошибку" Grid.Column="0" FontSize="12"/>
+            <Button Margin="1" Content="Закрыть" Grid.Column="1" FontSize="12"/>
+        </Grid>
+
+
 
     </Grid>
 </Window>
