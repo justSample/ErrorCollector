@@ -7,18 +7,18 @@ using System.Collections.Generic;
 
 namespace WPF_Main.Models
 {
-    public partial class Users
+    public partial class User
     {
-        public Users()
+        public User()
         {
-            Errors = new HashSet<Errors>();
-            Instructions = new HashSet<Instructions>();
+            Errors = new HashSet<Error>();
+            Instructions = new HashSet<Instruction>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Errors> Errors { get; set; }
-        public virtual ICollection<Instructions> Instructions { get; set; }
+        public virtual ICollection<Error> Errors { get; set; }
+        public virtual ICollection<Instruction> Instructions { get; set; }
     }
 }

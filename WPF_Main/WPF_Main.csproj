@@ -291,12 +291,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Errors.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\error_collectorContext.cs" />
-    <Compile Include="Models\Instructions.cs" />
-    <Compile Include="Models\Programs.cs" />
-    <Compile Include="Models\Steps.cs" />
-    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\Instruction.cs" />
+    <Compile Include="Models\Program.cs" />
+    <Compile Include="Models\Sql_Image.cs" />
+    <Compile Include="Models\Step.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Model\ErrorCollectorContext.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

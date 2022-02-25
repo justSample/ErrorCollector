@@ -23,11 +23,6 @@ namespace WPF_Main
         public MainWindow()
         {
             InitializeComponent();
-
-            listBoxCheck.ItemsSource = new string[] { "Alo", "Bro", "Ошибка в Рике EFFFF", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha", "haha" };
-
-            combo.ItemsSource = new string[] { "Bra", "A", "B", "C"};
-
         }
     }
 }

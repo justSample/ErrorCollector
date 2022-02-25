@@ -10,9 +10,6 @@ namespace WPF_Main.Models
 {
     public partial class error_collectorContext : DbContext
     {
-
-        //Scaffold-DbContext -provider MySql.Data.EntityFrameworkCore -connection "server=localhost;user=root;password=root;database=error_collector;" -OutputDir Models
-
         public error_collectorContext()
         {
         }
@@ -22,32 +19,29 @@ namespace WPF_Main.Models
         {
         }
 
-        public virtual DbSet<Errors> Errors { get; set; }
-        public virtual DbSet<Instructions> Instructions { get; set; }
-        public virtual DbSet<Programs> Programs { get; set; }
-        public virtual DbSet<Steps> Steps { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Error> Errors { get; set; }
+        public virtual DbSet<Instruction> Instructions { get; set; }
+        public virtual DbSet<Program> Programs { get; set; }
+        public virtual DbSet<Step> Steps { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=localhost;user=root;password=root;database=error_collector;Charset=utf8;");
+                optionsBuilder.UseMySQL("server=localhost;user=root;password=root;database=error_collector;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Errors>(entity =>
+            modelBuilder.Entity<Error>(entity =>
             {
                 entity.ToTable("errors");
 
-                entity.HasIndex(e => e.IdInstruction)
-                    .HasName("key_id_instruction_idx");
-
                 entity.HasIndex(e => e.IdProgram)
-                    .HasName("fkey_id_programm_idx");
+                    .HasName("fkey_id_prog_idx");
 
                 entity.HasIndex(e => e.IdUserCreated)
                     .HasName("fkey_id_user_idx");
@@ -63,10 +57,6 @@ namespace WPF_Main.Models
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .HasColumnType("mediumtext");
-
-                entity.Property(e => e.IdInstruction)
-                    .HasColumnName("id_instruction")
-                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.IdProgram)
                     .HasColumnName("id_program")
@@ -84,17 +74,11 @@ namespace WPF_Main.Models
                     .HasColumnName("name")
                     .HasMaxLength(300);
 
-                entity.HasOne(d => d.IdInstructionNavigation)
-                    .WithMany(p => p.Errors)
-                    .HasForeignKey(d => d.IdInstruction)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("key_id_instruction");
-
                 entity.HasOne(d => d.IdProgramNavigation)
                     .WithMany(p => p.Errors)
                     .HasForeignKey(d => d.IdProgram)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fkey_id_programm");
+                    .HasConstraintName("fkey_id_prog");
 
                 entity.HasOne(d => d.IdUserCreatedNavigation)
                     .WithMany(p => p.Errors)
@@ -103,7 +87,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_user");
             });
 
-            modelBuilder.Entity<Instructions>(entity =>
+            modelBuilder.Entity<Instruction>(entity =>
             {
                 entity.ToTable("instructions");
 
@@ -129,7 +113,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_user_crtd");
             });
 
-            modelBuilder.Entity<Programs>(entity =>
+            modelBuilder.Entity<Program>(entity =>
             {
                 entity.ToTable("programs");
 
@@ -143,7 +127,7 @@ namespace WPF_Main.Models
                     .HasMaxLength(120);
             });
 
-            modelBuilder.Entity<Steps>(entity =>
+            modelBuilder.Entity<Step>(entity =>
             {
                 entity.ToTable("steps");
 
@@ -177,7 +161,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_inst");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("users");
 

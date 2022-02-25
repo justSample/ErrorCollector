@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace WPF_Main.Models
 {
-    public partial class Programs
+    public partial class Program
     {
-        public Programs()
+        public Program()
         {
-            Errors = new HashSet<Errors>();
+            Errors = new HashSet<Error>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Errors> Errors { get; set; }
+        public virtual ICollection<Error> Errors { get; set; }
     }
 }
