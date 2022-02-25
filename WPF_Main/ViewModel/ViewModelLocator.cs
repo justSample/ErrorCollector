@@ -43,6 +43,7 @@ namespace WPF_Main.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ErrorViewModel>();
         }
 
         public MainViewModel Main
@@ -52,7 +53,15 @@ namespace WPF_Main.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public ErrorViewModel ErrorMain
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ErrorViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

@@ -291,16 +291,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\error_collectorContext.cs" />
-    <Compile Include="Models\Instruction.cs" />
-    <Compile Include="Models\Program.cs" />
+    <Compile Include="Models\Instructions.cs" />
+    <Compile Include="Models\Programs.cs" />
     <Compile Include="Models\Sql_Image.cs" />
-    <Compile Include="Models\Step.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Steps.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Model\ErrorCollectorContext.cs" />
+    <Compile Include="ViewModel\ErrorViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="View\ErrorAdder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -308,6 +313,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\ErrorAdder.xaml.cs">
+      <DependentUpon>ErrorAdder.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

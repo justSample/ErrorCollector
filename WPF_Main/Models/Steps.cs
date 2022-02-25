@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace WPF_Main.Models
 {
-    public partial class Step
+    public partial class Steps
     {
         public int Id { get; set; }
         public int IdInstructions { get; set; }
@@ -15,6 +15,6 @@ namespace WPF_Main.Models
         public string ActionDescription { get; set; }
         public byte[] Images { get; set; }
 
-        public virtual Instruction IdInstructionsNavigation { get; set; }
+        public virtual Instructions IdInstructionsNavigation { get; set; }
     }
 }

@@ -19,11 +19,11 @@ namespace WPF_Main.Models
         {
         }
 
-        public virtual DbSet<Error> Errors { get; set; }
-        public virtual DbSet<Instruction> Instructions { get; set; }
-        public virtual DbSet<Program> Programs { get; set; }
-        public virtual DbSet<Step> Steps { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Errors> Errors { get; set; }
+        public virtual DbSet<Instructions> Instructions { get; set; }
+        public virtual DbSet<Programs> Programs { get; set; }
+        public virtual DbSet<Steps> Steps { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,7 +36,7 @@ namespace WPF_Main.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Error>(entity =>
+            modelBuilder.Entity<Errors>(entity =>
             {
                 entity.ToTable("errors");
 
@@ -54,10 +54,6 @@ namespace WPF_Main.Models
                     .HasColumnName("comment")
                     .HasColumnType("mediumtext");
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasColumnType("mediumtext");
-
                 entity.Property(e => e.IdProgram)
                     .HasColumnName("id_program")
                     .HasColumnType("int(11)");
@@ -68,11 +64,19 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.Images)
                     .HasColumnName("images")
-                    .HasColumnType("blob");
+                    .HasColumnType("longblob");
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(300);
+
+                entity.Property(e => e.Solution)
+                    .HasColumnName("solution")
+                    .HasColumnType("mediumtext");
+
+                entity.Property(e => e.Сause)
+                    .HasColumnName("сause")
+                    .HasColumnType("mediumtext");
 
                 entity.HasOne(d => d.IdProgramNavigation)
                     .WithMany(p => p.Errors)
@@ -87,7 +91,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_user");
             });
 
-            modelBuilder.Entity<Instruction>(entity =>
+            modelBuilder.Entity<Instructions>(entity =>
             {
                 entity.ToTable("instructions");
 
@@ -113,7 +117,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_user_crtd");
             });
 
-            modelBuilder.Entity<Program>(entity =>
+            modelBuilder.Entity<Programs>(entity =>
             {
                 entity.ToTable("programs");
 
@@ -127,7 +131,7 @@ namespace WPF_Main.Models
                     .HasMaxLength(120);
             });
 
-            modelBuilder.Entity<Step>(entity =>
+            modelBuilder.Entity<Steps>(entity =>
             {
                 entity.ToTable("steps");
 
@@ -161,7 +165,7 @@ namespace WPF_Main.Models
                     .HasConstraintName("fkey_id_inst");
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<Users>(entity =>
             {
                 entity.ToTable("users");
 

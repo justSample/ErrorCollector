@@ -25,13 +25,14 @@ namespace WPF_Main.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        //Scaffold-DbContext -provider MySql.Data.EntityFrameworkCore -connection "server=localhost;user=root;password=root;database=error_collector;" -OutputDir Models -f
 
-        public User User { get; set; }
+        public Users User { get; set; }
 
-        public ObservableCollection<Program> Programs { get; set; }
+        public ObservableCollection<Programs> Programs { get; set; }
 
-        private Program _selectedProgram;
-        public Program SelectedProgram
+        private Programs _selectedProgram;
+        public Programs SelectedProgram
         {
             get
             {
@@ -47,14 +48,14 @@ namespace WPF_Main.ViewModel
                 using (error_collectorContext context = new error_collectorContext())
                 {
                     var listErrors = context.Errors.Where(e => e.IdProgram == _selectedProgram.Id).ToList();
-                    Errors = new ObservableCollection<Error>(listErrors);
+                    Errors = new ObservableCollection<Errors>(listErrors);
                 }
 
             }
         }
 
-        private ObservableCollection<Error> _errors;
-        public ObservableCollection<Error> Errors
+        private ObservableCollection<Errors> _errors;
+        public ObservableCollection<Errors> Errors
         {
             get
             {
@@ -68,9 +69,9 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Error _selectedError;
+        private Errors _selectedError;
 
-        public Error SelectedError
+        public Errors SelectedError
         {
             get
             {
@@ -83,17 +84,21 @@ namespace WPF_Main.ViewModel
 
                 _selectedError = value;
 
-                RaisePropertyChanged(nameof(SelectedError));
-
                 using (error_collectorContext context = new error_collectorContext())
                 {
-                    var listErrors = context.Errors.Where(e => e.Id == _selectedError.Id).ToList();
+                    var listErrors = context.Errors.Where(e => e.Id == SelectedError.Id).ToList();
+
+                    SelectedError.IdUserCreatedNavigation = context.Users.Where(u => u.Id == SelectedError.IdUserCreated).First();
 
                     byte[] data = listErrors.Select(s => s.Images).First();
                     if (data != null)
                         Images = new ObservableCollection<Sql_Image>(GetImages(data));
 
                 }
+
+                RaisePropertyChanged(nameof(SelectedError));
+
+                
 
             }
         }
@@ -122,7 +127,7 @@ namespace WPF_Main.ViewModel
             using(error_collectorContext context = new error_collectorContext())
             {
                 User = context.Users.FirstAsync().Result;
-                Programs = new ObservableCollection<Program>(context.Programs.ToList());
+                Programs = new ObservableCollection<Programs>(context.Programs.ToList());
 
             }
             
@@ -151,26 +156,32 @@ namespace WPF_Main.ViewModel
 
                 indexInByteArr += countBytes;
 
-                BitmapImage image = new BitmapImage();
-
-                using (MemoryStream ms = new MemoryStream(dataImage))
-                {
-                    ms.Position = 0;
-
-                    image.BeginInit();
-                    image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.UriSource = null;
-                    image.StreamSource = ms;
-                    image.EndInit();
-                }
-
                 _images.Add(new Sql_Image() { Data = dataImage });
 
             }
 
             return _images.ToArray();
 
+        }
+
+        private byte[] GetByteImages(string[] paths)
+        {
+
+            List<byte> vs = new List<byte>();
+
+            byte[] dataCountImages = BitConverter.GetBytes(paths.Length);
+
+            vs.AddRange(dataCountImages);
+
+            foreach (var path in paths)
+            {
+                byte[] dataImage = File.ReadAllBytes(path);
+
+                vs.AddRange(BitConverter.GetBytes(dataImage.Length));
+                vs.AddRange(dataImage);
+            }
+            
+            return vs.ToArray();
         }
 
 
