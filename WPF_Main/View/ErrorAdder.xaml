@@ -70,7 +70,7 @@
 
                 <TextBlock Margin="0,2.5" Grid.Row="0" Text="Выбор программы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <!--Выбор программы-->
-                <ComboBox Margin="0,2.5" Grid.Row="1" ItemsSource="{Binding Programs}" DisplayMemberPath="Name"/>
+                <ComboBox Margin="0,2.5" Grid.Row="1" ItemsSource="{Binding Programs}" SelectedItem="{Binding SelectedProgram}" DisplayMemberPath="Name"/>
 
             </Grid>
             <!--Наименование ошибки-->
@@ -135,10 +135,12 @@
         <!--Правая стенка-->
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
             <!--Изображения-->
-            <ListView Margin="2" ItemsSource="{Binding Images}">
+            <ListView Margin="2" ItemsSource="{Binding Images}" ScrollViewer.CanContentScroll="False">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding Image}"/>
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <Image Source="{Binding Image}" Margin="0,4"/>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -152,7 +154,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="1" Content="Добавить ошибку" Grid.Column="0" FontSize="12"/>
+            <Button Margin="1" Content="Добавить ошибку" Grid.Column="0" FontSize="12" Command="{Binding AddError}"/>
             <Button Margin="1" Content="Закрыть" Grid.Column="1" FontSize="12"/>
         </Grid>
 

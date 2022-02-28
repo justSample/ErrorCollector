@@ -26,6 +26,8 @@ namespace WPF_Main.ViewModel
     public class MainViewModel : ViewModelBase
     {
         //Scaffold-DbContext -provider MySql.Data.EntityFrameworkCore -connection "server=localhost;user=root;password=root;database=error_collector;" -OutputDir Models -f
+        //Если будут ????? вместо российских символов, то юзаем это: Charset=utf8;
+        //"server=localhost;user=root;password=root;database=error_collector;Charset=utf8;"
 
         public Users User { get; set; }
 

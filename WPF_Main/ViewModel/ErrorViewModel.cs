@@ -30,8 +30,8 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Programs _errorName;
-        public Programs ErrorName
+        private string _errorName;
+        public string ErrorName
         {
             get
             {
@@ -47,8 +47,8 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Programs _causeError;
-        public Programs CauseError
+        private string _causeError;
+        public string CauseError
         {
             get
             {
@@ -65,8 +65,8 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Programs _solutionError;
-        public Programs SolutionError
+        private string _solutionError;
+        public string SolutionError
         {
             get
             {
@@ -83,8 +83,8 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Programs _commentError;
-        public Programs CommentError
+        private string _commentError;
+        public string CommentError
         {
             get
             {
@@ -135,7 +135,6 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private RelayCommand _setImage;
         public RelayCommand SetImage
         {
             get
@@ -145,12 +144,16 @@ namespace WPF_Main.ViewModel
                     using(OpenFileDialog openFileDialog = new OpenFileDialog())
                     {
                         openFileDialog.Title = "Выбор изображений";
-                        openFileDialog.Filter = "Jpg (*.jpg)|*.jpg|Png (*.png)|*.png |All files(*.*)|*.*";
+                        openFileDialog.Filter = "Png (*.png)|*.png|Jpg (*.jpg)|*.jpg|All files(*.*)|*.*";
                         openFileDialog.Multiselect = true;
 
                         if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                        if (BufferToSave != null) BufferToSave = null;
+                        if (BufferToSave != null)
+                        {
+                            ClearBuffer();
+                            GC.Collect(0, GCCollectionMode.Forced);
+                        }
 
                         BufferToSave = GetByteImages(openFileDialog.FileNames);
                         Images = new ObservableCollection<Sql_Image>(GetImages(BufferToSave));
@@ -158,6 +161,36 @@ namespace WPF_Main.ViewModel
                 });
             }
 
+        }
+
+        public RelayCommand AddError
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (!IsEverythingFilled()) return;
+
+                    using(error_collectorContext context = new error_collectorContext())
+                    {
+                        context.Errors.Add(new Errors() { 
+                            IdProgram = SelectedProgram.Id, 
+                            IdUserCreated = 1, 
+                            Name = ErrorName, 
+                            DateCreated = DateTime.Now, 
+                            Cause = CauseError, 
+                            Solution = SolutionError, 
+                            Comment = CommentError, 
+                            Images = BufferToSave 
+                        });
+
+                        context.SaveChanges();
+
+                        MessageBox.Show("Ошибка добавлена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                });
+            }
         }
 
         private byte[] BufferToSave;
@@ -223,6 +256,48 @@ namespace WPF_Main.ViewModel
             return vs.ToArray();
         }
 
+
+        private void ClearBuffer()
+        {
+            BufferToSave = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Проверка на заполнение всех полей
+        /// </summary>
+        /// <returns></returns>
+        private bool IsEverythingFilled()
+        {
+
+            if(SelectedProgram == null)
+            {
+                MessageBox.Show("Программа не выбрана", "Код ошибки: 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(ErrorName))
+            {
+                MessageBox.Show("Название ошибки пустое", "Код ошибки: 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(CauseError))
+            {
+                MessageBox.Show("Причина ошибки пустое", "Код ошибки: 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(SolutionError))
+            {
+                MessageBox.Show("Решение ошибки пустое", "Код ошибки: 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
 
     }
 }
