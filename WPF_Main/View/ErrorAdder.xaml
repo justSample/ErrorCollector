@@ -12,7 +12,7 @@
 		ResizeMode="NoResize"
 		DataContext="{Binding Source={StaticResource Locator}, Path=ErrorMain}"
         >
-    <Grid Background="#6D1B90">
+    <Grid>
 
 
         <Grid.ColumnDefinitions>
@@ -139,7 +139,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Red" BorderThickness="2">
-                            <Image Source="{Binding Image}" Margin="0,4"/>
+                            <Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" Margin="0,4"/>
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>

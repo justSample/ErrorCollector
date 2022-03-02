@@ -149,14 +149,11 @@ namespace WPF_Main.ViewModel
 
                         if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                        if (BufferToSave != null)
-                        {
-                            ClearBuffer();
-                            GC.Collect(0, GCCollectionMode.Forced);
-                        }
+                        ClearBuffer();
 
-                        BufferToSave = GetByteImages(openFileDialog.FileNames);
-                        Images = new ObservableCollection<Sql_Image>(GetImages(BufferToSave));
+
+                        ImageBuffer.Data = GetByteImages(openFileDialog.FileNames);
+                        Images = new ObservableCollection<Sql_Image>(GetImages(ImageBuffer.Data));
                     }
                 });
             }
@@ -181,7 +178,7 @@ namespace WPF_Main.ViewModel
                             Cause = CauseError, 
                             Solution = SolutionError, 
                             Comment = CommentError, 
-                            Images = BufferToSave 
+                            Images = ImageBuffer.Data
                         });
 
                         context.SaveChanges();
@@ -193,7 +190,7 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private byte[] BufferToSave;
+        private Utils.Buffer ImageBuffer;
 
         public ErrorViewModel()
         {
@@ -259,10 +256,14 @@ namespace WPF_Main.ViewModel
 
         private void ClearBuffer()
         {
-            BufferToSave = null;
+            if(ImageBuffer != null)
+            {
+                ImageBuffer.Data = null;
+            }
+            ImageBuffer = null;
             GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+
+            ImageBuffer = new Utils.Buffer();
         }
 
         /// <summary>

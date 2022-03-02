@@ -82,7 +82,7 @@ namespace WPF_Main.ViewModel
 
             set
             {
-                if (_selectedError == value) return;
+                if (_selectedError == value || value == null) return;
 
                 _selectedError = value;
 
@@ -142,6 +142,9 @@ namespace WPF_Main.ViewModel
 
             List<Sql_Image> _images = new List<Sql_Image>();
 
+            
+            
+
             int countImages = BitConverter.ToInt32(data, 0);
 
             int indexInByteArr = 4;
@@ -157,6 +160,14 @@ namespace WPF_Main.ViewModel
                 Buffer.BlockCopy(data, indexInByteArr, dataImage, 0, countBytes);
 
                 indexInByteArr += countBytes;
+
+                using (MemoryStream ms = new MemoryStream(dataImage))
+                {
+                    ms.Position = 0;
+                    System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+
+
+                }
 
                 _images.Add(new Sql_Image() { Data = dataImage });
 

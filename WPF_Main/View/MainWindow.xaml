@@ -8,7 +8,8 @@
 		Height="450" 
 		Width="800"
 		WindowStartupLocation="CenterScreen"
-		WindowStyle="None"
+		
+        Background="Red"
 		
 		DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
 		>
@@ -33,7 +34,7 @@
         </Grid.RowDefinitions>
 
         <!--Header-->
-        <Grid Grid.Row="0" Grid.ColumnSpan="100" Background="#B21A67">
+        <Grid Grid.Row="0" Grid.ColumnSpan="100" Background="#B21A67" MouseDown="Grid_MouseDown">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -139,7 +140,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Red" BorderThickness="2">
-                            <Image Source="{Binding Image}" Margin="0,4" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <Image Source="{Binding Image}" Margin="0,4" Width="{Binding Width}" Height="{Binding Height}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -149,16 +150,16 @@
 
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
                     <TextBlock Text="Создатель данных" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Причина" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding SelectedError.Cause}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Решение" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="Причина" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="{Binding SelectedError.Cause}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="Решение" HorizontalAlignment="Center" Foreground="White"/>
                     <TextBlock Text="{Binding SelectedError.Solution}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
 
                 </StackPanel>
 
