@@ -8,12 +8,16 @@
 		Height="450" 
 		Width="800"
 		WindowStartupLocation="CenterScreen"
-		
-        Background="Red"
+		WindowStyle="None"
+        ResizeMode="CanResize"
 		
 		DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
 		>
 
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
+    </WindowChrome.WindowChrome>
+    
     <!-- https://colorscheme.ru/#4K41Trjrbv5vk -->
     <Grid Background="#6D1B90">
         <Grid.ColumnDefinitions>
