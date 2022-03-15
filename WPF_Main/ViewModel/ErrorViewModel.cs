@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,10 @@ namespace WPF_Main.ViewModel
 {
     public class ErrorViewModel : ViewModelBase
     {
+
+        public Action CloseAction { get; set; }
+
+
         private Programs _seletedProgram;
         public Programs SelectedProgram
         {
@@ -135,6 +140,8 @@ namespace WPF_Main.ViewModel
             }
         }
 
+        private Utils.Buffer ImageBuffer;
+
         public RelayCommand SetImage
         {
             get
@@ -160,6 +167,22 @@ namespace WPF_Main.ViewModel
 
         }
 
+        public RelayCommand SetImageFromBuffer
+        {
+            get
+            {
+                return new RelayCommand(() => 
+                {
+                    ClearBuffer();
+
+                    ImageBuffer.Data = GetByteFromBuffer();
+                    Images = new ObservableCollection<Sql_Image>(GetImages(ImageBuffer.Data));
+
+                });
+            }
+        }
+
+        //FIX ME: UserId
         public RelayCommand AddError
         {
             get
@@ -184,13 +207,23 @@ namespace WPF_Main.ViewModel
                         context.SaveChanges();
 
                         MessageBox.Show("Ошибка добавлена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        SetEmpty();
                     }
                 });
             }
         }
-
-        private Utils.Buffer ImageBuffer;
+        
+        //Есть ли утечка памяти?
+        public RelayCommand CloseWindow
+        {
+            get 
+            { 
+                return new RelayCommand(() => 
+                {
+                    CloseAction?.Invoke();
+                }); 
+            }
+        }
 
         public ErrorViewModel()
         {
@@ -253,6 +286,39 @@ namespace WPF_Main.ViewModel
             return vs.ToArray();
         }
 
+        private byte[] GetByteFromBuffer()
+        {
+
+            List<byte> vs = new List<byte>();
+
+            
+
+            var image = Clipboard.GetImage();
+
+            byte[] data = ImageToByte(image);
+
+            vs.AddRange(BitConverter.GetBytes(1));
+            vs.AddRange(BitConverter.GetBytes(data.Length));
+            vs.AddRange(data);
+
+            return vs.ToArray();
+        }
+
+        public static byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
+
+        private void SetEmpty()
+        {
+            SelectedProgram = null;
+            ErrorName = string.Empty;
+            CauseError = string.Empty;
+            SolutionError = string.Empty;
+            CommentError = string.Empty;
+            Images = null;
+        }
 
         private void ClearBuffer()
         {

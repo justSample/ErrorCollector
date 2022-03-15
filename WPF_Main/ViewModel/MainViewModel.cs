@@ -1,10 +1,12 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_Main.Models;
@@ -121,6 +123,54 @@ namespace WPF_Main.ViewModel
             }
         }
 
+        public RelayCommand OpenWindowCreateError
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    View.ErrorAdder viewError = new View.ErrorAdder();
+                    viewError.ShowDialog();
+                });
+            }
+        }
+
+        public RelayCommand DeleteError
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                    if (SelectedError == null) return;
+
+                    DialogResult result = Utils.MsgBox.Question($"Вы хотите удалить: {SelectedError.Name}?");
+                    
+                    if(result == DialogResult.No) return;
+
+                    using(error_collectorContext context = new error_collectorContext())
+                    {
+                        var error = context.Errors.Where(e => e.Id == SelectedError.Id).First();
+                        context.Errors.Remove(error);
+                        context.SaveChanges();
+                        var listErrors = context.Errors.Where(e => e.IdProgram == _selectedProgram.Id).ToList();
+                        Errors = new ObservableCollection<Errors>(listErrors);
+                    }
+                });
+            }
+        }
+
+        public RelayCommand EditError
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    
+                });
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -196,6 +246,7 @@ namespace WPF_Main.ViewModel
             
             return vs.ToArray();
         }
+
 
 
     }

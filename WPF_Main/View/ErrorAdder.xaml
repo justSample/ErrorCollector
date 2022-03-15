@@ -9,9 +9,16 @@
 		Width="800"
 		WindowStartupLocation="CenterScreen"
 		WindowStyle="None"
-		ResizeMode="NoResize"
+		ResizeMode="CanResize"
 		DataContext="{Binding Source={StaticResource Locator}, Path=ErrorMain}"
         >
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
+
+    </WindowChrome.WindowChrome>
+    
+    
     <Grid>
 
 
@@ -29,7 +36,7 @@
         </Grid.RowDefinitions>
         
         <!--Header-->
-        <Grid Grid.Row="0" Grid.ColumnSpan="100" Background="#B21A67">
+        <Grid Grid.Row="0" Grid.ColumnSpan="100" Background="#B21A67" MouseDown="Grid_MouseDown">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -40,9 +47,9 @@
             <TextBlock Grid.Column="0" Text="Создание отчёта об ошибке"/>
 
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
-                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="_"/>
-                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="▢"/>
-                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="✖"/>
+                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="_" Click="btnHideWindow_click"/>
+                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="▢" Click="btnFullScreen_click"/>
+                <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="✖" Command="{Binding CloseWindow}"/>
             </StackPanel>
 
         </Grid>
@@ -126,6 +133,9 @@
             <Grid Grid.Row="5">
                 <Button Margin="0,5" Content="Добавить изображения" FontSize="16" Command="{Binding SetImage}"/>
             </Grid>
+            <Grid Grid.Row="6">
+                <Button Margin="0,5" Content="Добавить из буфера" FontSize="16" Command="{Binding SetImageFromBuffer}"/>
+            </Grid>
 
             
 
@@ -136,10 +146,17 @@
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
             <!--Изображения-->
             <ListView Margin="2" ItemsSource="{Binding Images}" ScrollViewer.CanContentScroll="False">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Red" BorderThickness="2">
-                            <Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" Margin="0,4"/>
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"/>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -155,7 +172,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Margin="1" Content="Добавить ошибку" Grid.Column="0" FontSize="12" Command="{Binding AddError}"/>
-            <Button Margin="1" Content="Закрыть" Grid.Column="1" FontSize="12"/>
+            <Button Margin="1" Content="Закрыть" Grid.Column="1" FontSize="12" Command="{Binding CloseWindow}"/>
         </Grid>
 
 
