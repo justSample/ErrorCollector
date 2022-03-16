@@ -53,6 +53,7 @@ namespace WPF_Main.ViewModel
                 {
                     var listErrors = context.Errors.Where(e => e.IdProgram == _selectedProgram.Id).ToList();
                     Errors = new ObservableCollection<Errors>(listErrors);
+                    _bufferErrors = listErrors;
                 }
 
             }
@@ -73,8 +74,10 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Errors _selectedError;
+        private List<Errors> _bufferErrors;
 
+
+        private Errors _selectedError;
         public Errors SelectedError
         {
             get
@@ -84,6 +87,7 @@ namespace WPF_Main.ViewModel
 
             set
             {
+
                 if (_selectedError == value || value == null) return;
 
                 _selectedError = value;
@@ -103,7 +107,7 @@ namespace WPF_Main.ViewModel
                 RaisePropertyChanged(nameof(SelectedError));
 
                 
-
+                GC.Collect(GC.MaxGeneration);
             }
         }
 
@@ -120,6 +124,22 @@ namespace WPF_Main.ViewModel
                 if(_images == value) return;   
                 _images = value;
                 RaisePropertyChanged(nameof(Images));
+            }
+        }
+
+        private string _searchErrorText;
+
+        public string SearchErrorText
+        {
+
+            get => _searchErrorText;
+
+            set
+            {
+                if(value == _searchErrorText) return;
+
+                _searchErrorText = value;
+                Search();
             }
         }
 
@@ -247,7 +267,10 @@ namespace WPF_Main.ViewModel
             return vs.ToArray();
         }
 
-
+        private void Search()
+        {
+            Errors = new ObservableCollection<Errors>(_bufferErrors.Where(e => e.Name.ToLower().Contains(SearchErrorText.ToLower())));
+        }
 
     }
 }
