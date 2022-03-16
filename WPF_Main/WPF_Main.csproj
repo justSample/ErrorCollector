@@ -310,9 +310,18 @@
     <Compile Include="Utils\Buffer.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="ViewModel\ErrorViewModel.cs" />
+    <Compile Include="ViewModel\InstructionAdderViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="CustomControllers\Dictionary1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ErrorAdder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InstructionAdderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -326,6 +335,9 @@
     </Compile>
     <Compile Include="View\ErrorAdder.xaml.cs">
       <DependentUpon>ErrorAdder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InstructionAdderWindow.xaml.cs">
+      <DependentUpon>InstructionAdderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -360,7 +372,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomControllers\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
