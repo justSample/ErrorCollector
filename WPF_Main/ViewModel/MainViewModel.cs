@@ -94,11 +94,11 @@ namespace WPF_Main.ViewModel
 
                 using (error_collectorContext context = new error_collectorContext())
                 {
-                    var listErrors = context.Errors.Where(e => e.Id == SelectedError.Id).ToList();
+                    var listErrors = context.Errors.Where(e => e.Id == SelectedError.Id).ToList().First();
 
-                    SelectedError.IdUserCreatedNavigation = context.Users.Where(u => u.Id == SelectedError.IdUserCreated).First();
+                    SelectedError.IdUserCreatedNavigation = listErrors.IdUserCreatedNavigation;
 
-                    byte[] data = listErrors.Select(s => s.Images).First();
+                    byte[] data = listErrors.Images;
                     if (data != null)
                         Images = new ObservableCollection<Sql_Image>(GetImages(data));
 

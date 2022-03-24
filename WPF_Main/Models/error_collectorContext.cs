@@ -27,6 +27,8 @@ namespace WPF_Main.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLazyLoadingProxies();
+
 
             if (!optionsBuilder.IsConfigured)
             {

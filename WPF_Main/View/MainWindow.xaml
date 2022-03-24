@@ -5,14 +5,23 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:WPF_Main"
 		mc:Ignorable="d"
-		Height="450" 
-		Width="700"
+		Height="600" 
+		Width="800"
 		WindowStartupLocation="CenterScreen"
 		WindowStyle="None"
         ResizeMode="CanResize"
 		
 		DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
 		>
+
+    <Window.Resources>
+        <Style x:Key="BlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+        </Style>
+    </Window.Resources>
+    
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
@@ -204,21 +213,23 @@
 
             <Grid Grid.Row="0" Grid.Column="1">
 
+                <TextBlock Style="{StaticResource ResourceKey=BlockStyle}" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Информация об ошибке"/>
+
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="Создатель данных" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="Причина" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding SelectedError.Cause}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="Решение" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding SelectedError.Solution}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="Комментарий" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="{Binding SelectedError.Comment}" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="White"/>
-                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="Создатель данных:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="Причина:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="{Binding SelectedError.Cause}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="Решение:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="{Binding SelectedError.Solution}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="Комментарий:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="{Binding SelectedError.Comment}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
 
                 </StackPanel>
 
@@ -226,7 +237,15 @@
 
             <Grid Grid.Row="1" Grid.Column="1">
 
-                <ListView Margin="1" Background="#6D1B90">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Margin="1" BorderThickness="0.15" BorderBrush="Pink">
+                    <TextBlock Style="{StaticResource BlockStyle}" HorizontalAlignment="Center" Text="Инструкции"/>
+                </Border>
+                <ListView Grid.Row="1" Margin="1" Background="#6D1B90">
 
                 </ListView>
 
