@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_Main.Models;
 
 namespace WPF_Main.View
 {
@@ -26,7 +27,7 @@ namespace WPF_Main.View
         private double _defaultWidth;
         private double _defaultHeight;
 
-        public ErrorAdder()
+        public ErrorAdder(Errors error = null)
         {
             InitializeComponent();
             ((WPF_Main.ViewModel.ErrorViewModel)DataContext).CloseAction = new Action(this.Close);
@@ -34,6 +35,7 @@ namespace WPF_Main.View
             _defaultWidth = this.Width;
             _defaultHeight = this.Height;
 
+            ((WPF_Main.ViewModel.ErrorViewModel)DataContext).InitEdit(error);
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -108,6 +110,11 @@ namespace WPF_Main.View
             {
                 this.WindowState = _state;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ((WPF_Main.ViewModel.ErrorViewModel)DataContext).SetEmpty();
         }
     }
 

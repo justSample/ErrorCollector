@@ -186,7 +186,9 @@ namespace WPF_Main.ViewModel
             {
                 return new RelayCommand(() =>
                 {
+                    View.ErrorAdder viewError = new View.ErrorAdder(SelectedError);
                     
+                    viewError.ShowDialog();
                 });
             }
         }

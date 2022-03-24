@@ -16,7 +16,21 @@ namespace WPF_Main.ViewModel
     public class ErrorViewModel : ViewModelBase
     {
 
+        private string _btnAddName;
+        public string BtnAddName
+        {
+            get { return _btnAddName; }
+            set
+            {
+                _btnAddName = value;
+                RaisePropertyChanged(nameof(BtnAddName));
+            }
+        }
+
         public Action CloseAction { get; set; }
+
+        private Action ErrorAction { get; set; }
+
 
 
         private Programs _seletedProgram;
@@ -189,29 +203,12 @@ namespace WPF_Main.ViewModel
             {
                 return new RelayCommand(() =>
                 {
-                    if (!IsEverythingFilled()) return;
-
-                    using(error_collectorContext context = new error_collectorContext())
-                    {
-                        context.Errors.Add(new Errors() { 
-                            IdProgram = SelectedProgram.Id, 
-                            IdUserCreated = 1, 
-                            Name = ErrorName, 
-                            DateCreated = DateTime.Now, 
-                            Cause = CauseError, 
-                            Solution = SolutionError, 
-                            Comment = CommentError, 
-                            Images = ImageBuffer.Data
-                        });
-
-                        context.SaveChanges();
-
-                        MessageBox.Show("Ошибка добавлена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        SetEmpty();
-                    }
+                    ErrorAction?.Invoke();
                 });
             }
         }
+
+        private int _idError = -1;
         
         //Есть ли утечка памяти?
         public RelayCommand CloseWindow
@@ -227,12 +224,31 @@ namespace WPF_Main.ViewModel
 
         public ErrorViewModel()
         {
-            using(error_collectorContext context = new error_collectorContext())
+            using (error_collectorContext context = new error_collectorContext())
             {
-
-               Programs = new ObservableCollection<Programs>(context.Programs.ToArray());
-
+                Programs = new ObservableCollection<Programs>(context.Programs.ToArray());
+                BtnAddName = "Добавить ошибку";
+                ErrorAction = new Action(AddErrorMethod);
             }
+        }
+
+        public void InitEdit(Errors error)
+        {
+            if(error == null) return;
+
+            SelectedProgram = Programs.Where(p => p.Id == error.IdProgram).First();
+            ErrorName = error.Name;
+            CauseError = error.Cause;
+            SolutionError = error.Solution;
+            CommentError = error.Comment;
+
+            ClearBuffer();
+            ImageBuffer.Data = error.Images;
+            Images = new ObservableCollection<Sql_Image>(GetImages(error.Images));
+
+            BtnAddName = "Изменить ошибку";
+            ErrorAction = new Action(ChangeErrorMethod);
+            _idError = error.Id;
         }
 
         private Sql_Image[] GetImages(byte[] data)
@@ -264,6 +280,54 @@ namespace WPF_Main.ViewModel
 
             return _images.ToArray();
 
+        }
+
+        private void AddErrorMethod()
+        {
+            if (!IsEverythingFilled()) return;
+
+            using (error_collectorContext context = new error_collectorContext())
+            {
+                context.Errors.Add(new Errors()
+                {
+                    IdProgram = SelectedProgram.Id,
+                    IdUserCreated = 1,
+                    Name = ErrorName,
+                    DateCreated = DateTime.Now,
+                    Cause = CauseError,
+                    Solution = SolutionError,
+                    Comment = CommentError,
+                    Images = ImageBuffer.Data
+                });
+
+                context.SaveChanges();
+
+                MessageBox.Show("Ошибка добавлена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetEmpty();
+            }
+        }
+
+        private void ChangeErrorMethod()
+        {
+            if (!IsEverythingFilled()) return;
+
+            using (error_collectorContext context = new error_collectorContext())
+            {
+                var error = context.Errors.Where(x => x.Id == _idError).First();
+
+                error.Name = ErrorName;
+                error.Cause = CauseError;
+                error.Solution = SolutionError;
+                error.Comment = CommentError;
+                error.Images = ImageBuffer.Data;
+                BtnAddName = "Изменить ошибку";
+                ErrorAction = new Action(ChangeErrorMethod);
+
+                context.Update(error);
+                context.SaveChanges();
+
+                MessageBox.Show("Ошибка изменена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private byte[] GetByteImages(string[] paths)
@@ -310,7 +374,7 @@ namespace WPF_Main.ViewModel
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
-        private void SetEmpty()
+        public void SetEmpty()
         {
             SelectedProgram = null;
             ErrorName = string.Empty;

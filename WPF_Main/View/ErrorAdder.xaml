@@ -11,6 +11,7 @@
 		WindowStyle="None"
 		ResizeMode="CanResize"
 		DataContext="{Binding Source={StaticResource Locator}, Path=ErrorMain}"
+        Closing="Window_Closing"
         >
 
     <WindowChrome.WindowChrome>
@@ -77,7 +78,7 @@
 
                 <TextBlock Margin="0,2.5" Grid.Row="0" Text="Выбор программы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <!--Выбор программы-->
-                <ComboBox Margin="0,2.5" Grid.Row="1" ItemsSource="{Binding Programs}" SelectedItem="{Binding SelectedProgram}" DisplayMemberPath="Name"/>
+                <ComboBox Margin="0,2.5" Grid.Row="1" ItemsSource="{Binding Programs}" SelectedItem="{Binding SelectedProgram, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
 
             </Grid>
             <!--Наименование ошибки-->
@@ -171,7 +172,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="1" Content="Добавить ошибку" Grid.Column="0" FontSize="12" Command="{Binding AddError}"/>
+            <Button Margin="1" Content="{Binding BtnAddName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="0" FontSize="12" Command="{Binding AddError}"/>
             <Button Margin="1" Content="Закрыть" Grid.Column="1" FontSize="12" Command="{Binding CloseWindow}"/>
         </Grid>
 

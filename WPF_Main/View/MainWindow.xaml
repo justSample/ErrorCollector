@@ -55,10 +55,8 @@
                     <Image  Source="pack://application:,,,/Content/Images/Icons/kit_tool_icon_217215.png"/>
                     <TextBlock Text="Error collector v 0.0.1"/>
                 </StackPanel>
-                
             </Grid>
             
-
             <Grid Grid.Column="1" HorizontalAlignment="Center">
 
                 <Grid.ColumnDefinitions>
@@ -70,7 +68,6 @@
                 <TextBlock Grid.Column="1" Text="{Binding User.Name}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
             </Grid>
-
 
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
                 <Button Background="#D871A5" BorderThickness="0.1" Width="20" Content="_" Click="btnHideWindow_click"/>
@@ -164,7 +161,7 @@
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Удалить" Command="{Binding DeleteError}"/>
-                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Редактировать" Command="{Binding EditError}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
