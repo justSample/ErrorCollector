@@ -212,10 +212,9 @@
             </ListView>
 
             <Grid Grid.Row="0" Grid.Column="1">
-
-                <TextBlock Style="{StaticResource ResourceKey=BlockStyle}" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Информация об ошибке"/>
-
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                    <TextBlock Style="{StaticResource ResourceKey=BlockStyle}" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Информация об ошибке"/>
 
                     <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
                     <TextBlock Text="Создатель данных:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
@@ -232,7 +231,6 @@
                     <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
 
                 </StackPanel>
-
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
