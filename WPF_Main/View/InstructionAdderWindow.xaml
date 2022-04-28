@@ -7,17 +7,92 @@
         
         
         mc:Ignorable="d"
-        Title="InstructionAdderWindow" 
-        Height="450" 
-        Width="800"
+        Title="Добавление инструкции" 
+        Height="800" 
+        Width="600
+"
         
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
         
         DataContext="{Binding Source={StaticResource Locator}, Path=InstructionAdder}"
         >
 
+    <Window.Resources>
+        <Style x:Key="BlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+        </Style>
 
-    <Grid>
-        
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#FF7D28A2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#6D1B90">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Top-->
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="25" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBox Grid.Column="1" Text="Добавление" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+
+        </Grid>
+        <!--Image-->
+        <Grid Grid.Row="1">
+
+            <Image/>
+
+        </Grid>
+        <!--Description-->
+        <Grid Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Описание" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBlock Grid.Row="1" Text="Следует идти от сложного к простому и не иначе" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+
+        </Grid>
+        <!--Down-->
+        <Grid Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Добавить инструкцию" FontSize="12"/>
+            <Button Grid.Column="1" Content="Закрыть и не сохранять" FontSize="12"/>
+            <Button Grid.Column="2" Content="Left" FontSize="12"/>
+            <Button Grid.Column="3" Content="Rigth" FontSize="12"/>
+
+        </Grid>
+
     </Grid>
 
 </Window>
