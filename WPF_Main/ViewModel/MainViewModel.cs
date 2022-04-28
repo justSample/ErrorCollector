@@ -96,7 +96,7 @@ namespace WPF_Main.ViewModel
                 {
                     var listErrors = context.Errors.Where(e => e.Id == SelectedError.Id).ToList().First();
 
-                    SelectedError.IdUserCreatedNavigation = listErrors.IdUserCreatedNavigation;
+                    NameUserCreate = listErrors.IdUserCreatedNavigation.Name;
 
                     byte[] data = listErrors.Images;
                     if (data != null)
@@ -108,6 +108,24 @@ namespace WPF_Main.ViewModel
 
                 
                 GC.Collect(GC.MaxGeneration);
+            }
+        }
+
+        private string _nameUserCreate;
+        public string NameUserCreate
+        {
+            get
+            {
+                return _nameUserCreate;
+            }
+
+            set
+            {
+                if(value == _nameUserCreate) return;
+
+                _nameUserCreate = value;
+
+                RaisePropertyChanged(nameof(NameUserCreate));
             }
         }
 

@@ -6,7 +6,7 @@
 		xmlns:local="clr-namespace:WPF_Main"
 		mc:Ignorable="d"
 		Height="600" 
-		Width="800"
+		Width="1400"
 		WindowStartupLocation="CenterScreen"
 		WindowStyle="None"
         ResizeMode="CanResize"
@@ -212,13 +212,13 @@
             </ListView>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top">
 
                     <TextBlock Style="{StaticResource ResourceKey=BlockStyle}" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Информация об ошибке"/>
 
                     <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
                     <TextBlock Text="Создатель данных:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
-                    <TextBlock Text="{Binding SelectedError.IdUserCreatedNavigation.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+                    <TextBlock Text="{Binding NameUserCreate}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
                     <TextBlock Text="--------------------------------------" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
                     <TextBlock Text="Причина:" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
                     <TextBlock Text="{Binding SelectedError.Cause}" TextWrapping="Wrap" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
