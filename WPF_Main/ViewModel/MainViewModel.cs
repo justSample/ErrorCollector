@@ -38,10 +38,8 @@ namespace WPF_Main.ViewModel
         private Programs _selectedProgram;
         public Programs SelectedProgram
         {
-            get
-            {
-                return _selectedProgram;
-            }
+            get => _selectedProgram;
+            
 
             set
             {
@@ -62,11 +60,8 @@ namespace WPF_Main.ViewModel
         private ObservableCollection<Errors> _errors;
         public ObservableCollection<Errors> Errors
         {
-            get
-            {
-                return _errors;
-            }
-
+            get => _errors;
+            
             set
             {
                 _errors = value;
@@ -80,10 +75,8 @@ namespace WPF_Main.ViewModel
         private Errors _selectedError;
         public Errors SelectedError
         {
-            get
-            {
-                return _selectedError;
-            }
+            get => _selectedError;
+            
 
             set
             {
@@ -94,7 +87,7 @@ namespace WPF_Main.ViewModel
 
                 using (error_collectorContext context = new error_collectorContext())
                 {
-                    Errors error = context.Errors.Where(e => e.Id == SelectedError.Id).ToList().First();
+                    Errors error = context.Errors.Where(e => e.Id == SelectedError.Id).First();
 
                     NameUserCreate = error.IdUserCreatedNavigation.Name;
 
@@ -114,11 +107,8 @@ namespace WPF_Main.ViewModel
         private string _nameUserCreate;
         public string NameUserCreate
         {
-            get
-            {
-                return _nameUserCreate;
-            }
-
+            get => _nameUserCreate;
+            
             set
             {
                 if(value == _nameUserCreate) return;
@@ -132,11 +122,8 @@ namespace WPF_Main.ViewModel
         private ObservableCollection<Sql_Image> _images;
         public ObservableCollection<Sql_Image> Images
         {
-            get
-            {
-                return this._images;
-            }
-
+            get => this._images;
+            
             set
             {
                 if(_images == value) return;   
@@ -232,9 +219,6 @@ namespace WPF_Main.ViewModel
 
             List<Sql_Image> _images = new List<Sql_Image>();
 
-            
-            
-
             int countImages = BitConverter.ToInt32(data, 0);
 
             int indexInByteArr = 4;
@@ -255,16 +239,12 @@ namespace WPF_Main.ViewModel
                 {
                     ms.Position = 0;
                     System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-
-
                 }
 
                 _images.Add(new Sql_Image() { Data = dataImage });
-
             }
 
             return _images.ToArray();
-
         }
 
         private byte[] GetByteImages(string[] paths)
