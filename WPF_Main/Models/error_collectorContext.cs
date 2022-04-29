@@ -77,10 +77,6 @@ namespace WPF_Main.Models
                     .HasColumnName("name")
                     .HasMaxLength(300);
 
-                entity.Property(e => e.DateCreated)
-                .HasColumnName("date_created")
-                .HasColumnType("datetime");
-
                 entity.Property(e => e.Solution)
                     .HasColumnName("solution")
                     .HasColumnType("mediumtext");
@@ -151,7 +147,11 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.ActionDescription)
                     .HasColumnName("action_description")
-                    .HasMaxLength(45);
+                    .HasColumnType("mediumtext");
+
+                entity.Property(e => e.Header)
+                    .HasColumnName("header")
+                    .HasMaxLength(300);
 
                 entity.Property(e => e.IdInstructions)
                     .HasColumnName("id_instructions")
@@ -163,7 +163,7 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.Number)
                     .HasColumnName("number")
-                    .HasMaxLength(45);
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.IdInstructionsNavigation)
                     .WithMany(p => p.Steps)

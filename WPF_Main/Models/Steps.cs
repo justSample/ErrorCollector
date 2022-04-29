@@ -11,7 +11,8 @@ namespace WPF_Main.Models
     {
         public int Id { get; set; }
         public int IdInstructions { get; set; }
-        public string Number { get; set; }
+        public int Number { get; set; }
+        public string Header { get; set; }
         public string ActionDescription { get; set; }
         public byte[] Images { get; set; }
 
