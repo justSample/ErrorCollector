@@ -322,8 +322,12 @@
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="ViewModel\ErrorViewModel.cs" />
     <Compile Include="ViewModel\InstructionAdderViewModel.cs" />
+    <Compile Include="ViewModel\InstructionViewerViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\InstructionViewer.xaml.cs">
+      <DependentUpon>InstructionViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ModelWindow_QuestionTextBox.xaml.cs">
       <DependentUpon>ModelWindow_QuestionTextBox.xaml</DependentUpon>
     </Compile>
@@ -340,6 +344,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InstructionAdderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InstructionViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
