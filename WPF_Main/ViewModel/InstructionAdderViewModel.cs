@@ -2,10 +2,13 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WPF_Main.Models;
+using WPF_Main.Utils;
 
 namespace WPF_Main.ViewModel
 {
@@ -41,7 +44,7 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private Sql_Image _sql_image;
+        private Sql_Image _sql_image = new Sql_Image();
         public Sql_Image CurrentImage
         {
             get => _sql_image;
@@ -76,7 +79,16 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Title = "Выбор изображения";
+                    openFileDialog.Filter = "Jpg (*.jpg)|*.jpg|Png (*.png)|*.png|All files(*.*)|*.*";
+                    openFileDialog.Multiselect = false;
 
+                    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                    CurrentImage = ByteOperation.GetImages(ByteOperation.GetByteImage(openFileDialog.FileName)).First();
+                }
             });
         }
 

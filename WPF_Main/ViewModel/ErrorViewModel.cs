@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WPF_Main.Models;
+using WPF_Main.Utils;
 
 namespace WPF_Main.ViewModel
 {
@@ -173,8 +174,8 @@ namespace WPF_Main.ViewModel
                         ClearBuffer();
 
 
-                        ImageBuffer.Data = GetByteImages(openFileDialog.FileNames);
-                        Images = new ObservableCollection<Sql_Image>(GetImages(ImageBuffer.Data));
+                        ImageBuffer.Data = ByteOperation.GetByteImages(openFileDialog.FileNames);
+                        Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(ImageBuffer.Data));
                     }
                 });
             }
@@ -189,8 +190,8 @@ namespace WPF_Main.ViewModel
                 {
                     ClearBuffer();
 
-                    ImageBuffer.Data = GetByteFromBuffer();
-                    Images = new ObservableCollection<Sql_Image>(GetImages(ImageBuffer.Data));
+                    ImageBuffer.Data = ByteOperation.GetByteFromBuffer();
+                    Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(ImageBuffer.Data));
 
                 });
             }
@@ -244,42 +245,11 @@ namespace WPF_Main.ViewModel
 
             ClearBuffer();
             ImageBuffer.Data = error.Images;
-            Images = new ObservableCollection<Sql_Image>(GetImages(error.Images));
+            Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(error.Images));
 
             BtnAddName = "Изменить ошибку";
             ErrorAction = new Action(ChangeErrorMethod);
             _idError = error.Id;
-        }
-
-        private Sql_Image[] GetImages(byte[] data)
-        {
-
-            if (data == null) return null;
-
-            List<Sql_Image> _images = new List<Sql_Image>();
-
-            int countImages = BitConverter.ToInt32(data, 0);
-
-            int indexInByteArr = 4;
-
-            for (int i = 0; i < countImages; i++)
-            {
-                int countBytes = BitConverter.ToInt32(data, indexInByteArr);
-
-                indexInByteArr += 4;
-
-                byte[] dataImage = new byte[countBytes];
-
-                Buffer.BlockCopy(data, indexInByteArr, dataImage, 0, countBytes);
-
-                indexInByteArr += countBytes;
-
-                _images.Add(new Sql_Image() { Data = dataImage });
-
-            }
-
-            return _images.ToArray();
-
         }
 
         private void AddErrorMethod()
@@ -328,50 +298,6 @@ namespace WPF_Main.ViewModel
 
                 MessageBox.Show("Ошибка изменена!", "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private byte[] GetByteImages(string[] paths)
-        {
-
-            List<byte> vs = new List<byte>();
-
-            byte[] dataCountImages = BitConverter.GetBytes(paths.Length);
-
-            vs.AddRange(dataCountImages);
-
-            foreach (var path in paths)
-            {
-                byte[] dataImage = File.ReadAllBytes(path);
-
-                vs.AddRange(BitConverter.GetBytes(dataImage.Length));
-                vs.AddRange(dataImage);
-            }
-
-            return vs.ToArray();
-        }
-
-        private byte[] GetByteFromBuffer()
-        {
-
-            List<byte> vs = new List<byte>();
-
-            
-
-            var image = Clipboard.GetImage();
-
-            byte[] data = ImageToByte(image);
-
-            vs.AddRange(BitConverter.GetBytes(1));
-            vs.AddRange(BitConverter.GetBytes(data.Length));
-            vs.AddRange(data);
-
-            return vs.ToArray();
-        }
-
-        public static byte[] ImageToByte(Image img)
-        {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
         public void SetEmpty()

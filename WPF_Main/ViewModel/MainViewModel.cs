@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_Main.Models;
+using WPF_Main.Utils;
 
 namespace WPF_Main.ViewModel
 {
@@ -77,10 +78,8 @@ namespace WPF_Main.ViewModel
         {
             get => _selectedError;
             
-
             set
             {
-
                 if (_selectedError == value || value == null) return;
 
                 _selectedError = value;
@@ -93,7 +92,7 @@ namespace WPF_Main.ViewModel
 
                     byte[] data = error.Images;
                     if (data != null)
-                        Images = new ObservableCollection<Sql_Image>(GetImages(data));
+                        Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(data));
 
                 }
 
@@ -198,9 +197,6 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
         public MainViewModel()
         {
             using(error_collectorContext context = new error_collectorContext())
@@ -210,61 +206,6 @@ namespace WPF_Main.ViewModel
 
             }
             
-        }
-
-        private Sql_Image[] GetImages(byte[] data)
-        {
-
-            if(data == null) return null;
-
-            List<Sql_Image> _images = new List<Sql_Image>();
-
-            int countImages = BitConverter.ToInt32(data, 0);
-
-            int indexInByteArr = 4;
-
-            for (int i = 0; i < countImages; i++)
-            {
-                int countBytes = BitConverter.ToInt32(data, indexInByteArr);
-
-                indexInByteArr += 4;
-
-                byte[] dataImage = new byte[countBytes];
-
-                Buffer.BlockCopy(data, indexInByteArr, dataImage, 0, countBytes);
-
-                indexInByteArr += countBytes;
-
-                using (MemoryStream ms = new MemoryStream(dataImage))
-                {
-                    ms.Position = 0;
-                    System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-                }
-
-                _images.Add(new Sql_Image() { Data = dataImage });
-            }
-
-            return _images.ToArray();
-        }
-
-        private byte[] GetByteImages(string[] paths)
-        {
-
-            List<byte> vs = new List<byte>();
-
-            byte[] dataCountImages = BitConverter.GetBytes(paths.Length);
-
-            vs.AddRange(dataCountImages);
-
-            foreach (var path in paths)
-            {
-                byte[] dataImage = File.ReadAllBytes(path);
-
-                vs.AddRange(BitConverter.GetBytes(dataImage.Length));
-                vs.AddRange(dataImage);
-            }
-            
-            return vs.ToArray();
         }
 
         private void Search()

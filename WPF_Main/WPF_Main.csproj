@@ -317,6 +317,7 @@
     <Compile Include="Models\Steps.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Utils\Buffer.cs" />
+    <Compile Include="Utils\ByteOperation.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="ViewModel\ErrorViewModel.cs" />
     <Compile Include="ViewModel\InstructionAdderViewModel.cs" />
