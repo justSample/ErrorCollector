@@ -319,6 +319,7 @@
     <Compile Include="Utils\Buffer.cs" />
     <Compile Include="Utils\ByteOperation.cs" />
     <Compile Include="Utils\Instruction.cs" />
+    <Compile Include="Utils\InstructionPrefab.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="ViewModel\ErrorViewModel.cs" />
     <Compile Include="ViewModel\InstructionAdderViewModel.cs" />

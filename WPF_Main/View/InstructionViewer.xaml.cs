@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_Main.Models;
+using WPF_Main.ViewModel;
 
 namespace WPF_Main.View
 {
@@ -22,6 +24,10 @@ namespace WPF_Main.View
         public InstructionViewer()
         {
             InitializeComponent();
+            ((InstructionViewerViewModel)DataContext).Window = this;
         }
+
+        public void SetInstruction(Instructions instruction) => ((InstructionViewerViewModel)DataContext).SetInstruction(instruction);
+        
     }
 }

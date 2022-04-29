@@ -15,9 +15,111 @@
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         
-        DataContext="{Binding Source={StaticResource Locator}, Path=InstructionAdder}"
+        DataContext="{Binding Source={StaticResource Locator}, Path=InstructionViewer}"
         >
-    <Grid>
+
+    <Window.Resources>
         
+        <Style x:Key="BlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+            
+        </Style>
+
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+
+            <Setter Property="Background" Value="#FF7D28A2"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" FontFamily="Arial" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="#6D1B90">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Top-->
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="{Binding CountPages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBlock Grid.Column="1" Text="{Binding NameContentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ResourceKey=BlockStyle}"/>
+
+        </Grid>
+        <!--Image-->
+        <Grid Grid.Row="1">
+
+            <Image Source="{Binding CurrentImage.Image}"/>
+
+        </Grid>
+        <!--Description-->
+        <Grid Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Описание" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBlock Margin="0,2" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" TextWrapping="Wrap" Style="{StaticResource ResourceKey=BlockStyle}"/>
+
+        </Grid>
+        <!--Down-->
+        <Grid Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Grid.ColumnSpan="2" Content="Закрыть" FontSize="24" Command="{Binding Close}"/>
+            <Button Grid.Column="2" Content="Left" FontSize="12" Command="{Binding BackPage}"/>
+            <Button Grid.Column="3" Content="Rigth" FontSize="12" Command="{Binding NextPage}"/>
+
+        </Grid>
+
     </Grid>
 </Window>

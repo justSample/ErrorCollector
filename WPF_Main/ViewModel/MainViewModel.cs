@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_Main.Models;
 using WPF_Main.Utils;
+using WPF_Main.View;
 
 namespace WPF_Main.ViewModel
 {
@@ -72,6 +73,7 @@ namespace WPF_Main.ViewModel
 
         private List<Errors> _bufferErrors;
 
+        public ObservableCollection<InstructionPrefab> BtnInstructions { get; set; }
 
         private Errors _selectedError;
         public Errors SelectedError
@@ -197,15 +199,34 @@ namespace WPF_Main.ViewModel
             }
         }
 
+        public RelayCommand AddNewInstruction 
+        {
+            get => new RelayCommand(() =>
+            {
+                new View.InstructionAdderWindow().ShowDialog();
+            });
+        }
+
         public MainViewModel()
         {
             using(error_collectorContext context = new error_collectorContext())
             {
                 User = context.Users.FirstAsync().Result;
                 Programs = new ObservableCollection<Programs>(context.Programs.ToList());
+                InitInstructions(context.Instructions.ToArray());
 
             }
             
+        }
+
+        private void InitInstructions(Instructions[] instructions)
+        {
+            BtnInstructions = new ObservableCollection<InstructionPrefab>();
+
+            for (int i = 0; i < instructions.Length; i++)
+            {
+                BtnInstructions.Add(new InstructionPrefab(instructions[i]));
+            }
         }
 
         private void Search()

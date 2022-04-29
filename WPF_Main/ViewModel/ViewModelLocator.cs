@@ -45,6 +45,7 @@ namespace WPF_Main.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ErrorViewModel>();
             SimpleIoc.Default.Register<InstructionAdderViewModel>();
+            SimpleIoc.Default.Register<InstructionViewerViewModel>();
         }
 
         public MainViewModel Main
@@ -68,6 +69,14 @@ namespace WPF_Main.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<InstructionAdderViewModel>();
+            }
+        }
+
+        public InstructionViewerViewModel InstructionViewer
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InstructionViewerViewModel>();
             }
         }
 

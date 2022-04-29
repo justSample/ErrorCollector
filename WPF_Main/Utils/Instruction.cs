@@ -18,5 +18,13 @@ namespace WPF_Main.Utils
 
         public Sql_Image Image { get; set; } = new Sql_Image();
 
+        public void SetFromStep(Steps step)
+        {
+            IndexPage = step.Number;
+            Header = step.Header;
+            Description = step.ActionDescription;
+            Image.Data = step.Images;
+        }
+
     }
 }

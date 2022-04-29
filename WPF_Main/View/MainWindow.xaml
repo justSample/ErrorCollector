@@ -94,7 +94,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Инструкции">
-                    <MenuItem Header="Добавить инструкцию">
+                    <MenuItem Header="Добавить инструкцию" Command="{Binding AddNewInstruction}">
 
                     </MenuItem>
                 </MenuItem>
@@ -243,8 +243,22 @@
                 <Border Margin="1" BorderThickness="0.15" BorderBrush="Pink">
                     <TextBlock Style="{StaticResource BlockStyle}" HorizontalAlignment="Center" Text="Инструкции"/>
                 </Border>
-                <ListView Grid.Row="1" Margin="1" Background="#6D1B90">
+                <ListView Grid.Row="1" Margin="1" Background="#6D1B90" ItemsSource="{Binding BtnInstructions}">
 
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Button Content="{Binding Name}" Command="{Binding OpenInstruction}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    
                 </ListView>
 
             </Grid>
