@@ -26,15 +26,41 @@
             <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
         </Style>
 
-        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+
             <Setter Property="Background" Value="#FF7D28A2"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" FontFamily="Arial" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+        
     </Window.Resources>
 
     <Grid Background="#6D1B90">
@@ -55,14 +81,31 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Text="{Binding CountPages}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
-            <TextBox Grid.Column="1" Text="{Binding NameContentPage}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+            <TextBox Grid.Column="1" Text="{Binding NameContentPage}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать оглавление"/>
 
         </Grid>
         <!--Image-->
         <Grid Grid.Row="1">
 
-            <Image Source="{Binding CurrentImage.Image}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.05*"/>
+            </Grid.RowDefinitions>
+            
+            <Image Grid.Row="0" Source="{Binding CurrentImage.Image}"/>
 
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Margin="2,0" Grid.Column="0" Content="Добавить изображение по пути" Command="{Binding LoadImageFromPath}"/>
+                <Button Margin="2,0" Grid.Column="1" Content="Добавить изображение из буффера" Command="{Binding LoadImageFromBuffer}"/>
+
+            </Grid>
+            
         </Grid>
         <!--Description-->
         <Grid Grid.Row="2">
@@ -73,7 +116,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Описание" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
-            <TextBox Margin="0,2" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+            <TextBox Margin="0,2" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать описание"/>
 
         </Grid>
         <!--Down-->

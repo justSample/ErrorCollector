@@ -72,6 +72,22 @@ namespace WPF_Main.ViewModel
             }
         }
 
+        public RelayCommand LoadImageFromPath
+        {
+            get => new RelayCommand(() =>
+            {
+
+            });
+        }
+
+        public RelayCommand LoadImageFromBuffer
+        {
+            get => new RelayCommand(() =>
+            {
+
+            });
+        }
+
         public RelayCommand SaveInstruction
         {
             get => new RelayCommand(() =>
