@@ -89,8 +89,6 @@ namespace WPF_Main.Utils
 
             List<byte> vs = new List<byte>();
 
-
-
             var image = Clipboard.GetImage();
 
             byte[] data = ImageToByte(image);

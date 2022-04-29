@@ -80,8 +80,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="{Binding CountPages}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
-            <TextBox Grid.Column="1" Text="{Binding NameContentPage}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать оглавление"/>
+            <TextBlock Grid.Column="0" Text="{Binding CountPages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBox Grid.Column="1" Text="{Binding NameContentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать оглавление"/>
 
         </Grid>
         <!--Image-->

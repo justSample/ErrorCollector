@@ -87,7 +87,7 @@ namespace WPF_Main.ViewModel
 
                     if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                    CurrentImage = ByteOperation.GetImages(ByteOperation.GetByteImage(openFileDialog.FileName)).First();
+                    CurrentImage = ByteOperation.GetImage(ByteOperation.GetByteImage(openFileDialog.FileName));
                 }
             });
         }
@@ -96,7 +96,7 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-
+                CurrentImage = ByteOperation.GetImage(ByteOperation.GetByteFromBuffer());
             });
         }
 
