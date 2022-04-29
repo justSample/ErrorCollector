@@ -1,0 +1,141 @@
+﻿<Window x:Class="WPF_Main.View.InstructionAdderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Main.View"
+        
+        
+        mc:Ignorable="d"
+        Title="Добавление инструкции" 
+        Height="800" 
+        Width="600
+"
+        
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        
+        DataContext="{Binding Source={StaticResource Locator}, Path=InstructionAdder}"
+        >
+
+    <Window.Resources>
+        <Style x:Key="BlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+        </Style>
+
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+
+            <Setter Property="Background" Value="#FF7D28A2"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Cambria Bold Italic"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" FontFamily="Arial" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+
+    <Grid Background="#6D1B90">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Top-->
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="{Binding CountPages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBox Grid.Column="1" Text="{Binding NameContentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать оглавление"/>
+
+        </Grid>
+        <!--Image-->
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.05*"/>
+            </Grid.RowDefinitions>
+            
+            <Image Grid.Row="0" Source="{Binding CurrentImage.Image}"/>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Margin="2,0" Grid.Column="0" Content="Добавить изображение по пути" Command="{Binding LoadImageFromPath}"/>
+                <Button Margin="2,0" Grid.Column="1" Content="Добавить изображение из буффера" Command="{Binding LoadImageFromBuffer}"/>
+
+            </Grid>
+            
+        </Grid>
+        <!--Description-->
+        <Grid Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Описание" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=BlockStyle}"/>
+            <TextBox Margin="0,2" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="Сюда писать описание"/>
+
+        </Grid>
+        <!--Down-->
+        <Grid Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Добавить инструкцию" FontSize="12" Command="{Binding SaveInstruction}"/>
+            <Button Grid.Column="1" Content="Закрыть и не сохранять" FontSize="12" Command="{Binding NotSaveAndClose}"/>
+            <Button Grid.Column="2" Content="Left" FontSize="12" Command="{Binding BackPage}"/>
+            <Button Grid.Column="3" Content="Rigth" FontSize="12" Command="{Binding NextPage}"/>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

@@ -43,6 +43,9 @@ namespace WPF_Main.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ErrorViewModel>();
+            SimpleIoc.Default.Register<InstructionAdderViewModel>();
+            SimpleIoc.Default.Register<InstructionViewerViewModel>();
         }
 
         public MainViewModel Main
@@ -52,7 +55,31 @@ namespace WPF_Main.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public ErrorViewModel ErrorMain
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ErrorViewModel>();
+            }
+        }
+
+        public InstructionAdderViewModel InstructionAdder
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InstructionAdderViewModel>();
+            }
+        }
+
+        public InstructionViewerViewModel InstructionViewer
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InstructionViewerViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

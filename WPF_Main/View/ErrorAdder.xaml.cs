@@ -10,25 +10,32 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF_Main.Utils;
+using WPF_Main.Models;
 
-namespace WPF_Main
+namespace WPF_Main.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ErrorAdder.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ErrorAdder : Window
     {
-
         private WindowState _state = WindowState.Normal;
         private double _width;
         private double _height;
 
-        public MainWindow()
+        private double _defaultWidth;
+        private double _defaultHeight;
+
+        public ErrorAdder(Errors error = null)
         {
             InitializeComponent();
+            ((WPF_Main.ViewModel.ErrorViewModel)DataContext).CloseAction = new Action(this.Close);
+
+            _defaultWidth = this.Width;
+            _defaultHeight = this.Height;
+
+            ((WPF_Main.ViewModel.ErrorViewModel)DataContext).InitEdit(error);
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -41,12 +48,12 @@ namespace WPF_Main
                 }
             }
 
-            if(e.ClickCount == 2)
+            if (e.ClickCount == 2)
             {
                 SetFullScreen();
             }
 
-            
+
         }
 
         private void btnCloseWindow_click(object sender, RoutedEventArgs e)
@@ -73,10 +80,11 @@ namespace WPF_Main
                     _state = WindowState.Maximized;
                     break;
                 case WindowState.Maximized:
-                    this.Width = _width;
-                    this.Height = _height;
+                    this.Width = _defaultWidth;
+                    this.Height = _defaultHeight;
                     CenterWindowOnScreen();
                     _state = WindowState.Normal;
+                    this.WindowState = WindowState.Normal;
                     break;
             }
         }
@@ -93,7 +101,7 @@ namespace WPF_Main
 
         private void btnHideWindow_click(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState == WindowState.Normal || this.WindowState == WindowState.Maximized)
+            if (this.WindowState == WindowState.Normal || this.WindowState == WindowState.Maximized)
             {
                 _state = this.WindowState;
                 this.WindowState = WindowState.Minimized;
@@ -103,5 +111,12 @@ namespace WPF_Main
                 this.WindowState = _state;
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ((WPF_Main.ViewModel.ErrorViewModel)DataContext).SetEmpty();
+        }
     }
+
+    
 }
