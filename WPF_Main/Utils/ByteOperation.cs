@@ -91,6 +91,8 @@ namespace WPF_Main.Utils
 
             var image = Clipboard.GetImage();
 
+            if(image == null) return null;
+
             byte[] data = ImageToByte(image);
 
             vs.AddRange(BitConverter.GetBytes(1));
