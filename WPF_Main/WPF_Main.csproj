@@ -318,11 +318,15 @@
     <Compile Include="Models\Users.cs" />
     <Compile Include="Utils\Buffer.cs" />
     <Compile Include="Utils\ByteOperation.cs" />
+    <Compile Include="Utils\Instruction.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="ViewModel\ErrorViewModel.cs" />
     <Compile Include="ViewModel\InstructionAdderViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ModelWindow_QuestionTextBox.xaml.cs">
+      <DependentUpon>ModelWindow_QuestionTextBox.xaml</DependentUpon>
+    </Compile>
     <Page Include="CustomControllers\Dictionary1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -357,6 +361,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ModelWindow_QuestionTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

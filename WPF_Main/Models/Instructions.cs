@@ -17,6 +17,8 @@ namespace WPF_Main.Models
         public int Id { get; set; }
         public int IdUserCreated { get; set; }
         public string Name { get; set; }
+        public DateTime Date_created { get; set; }
+        public DateTime Date_change { get; set; }
 
         public virtual Users IdUserCreatedNavigation { get; set; }
         public virtual ICollection<Steps> Steps { get; set; }

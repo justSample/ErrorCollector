@@ -9,71 +9,78 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WPF_Main.Models;
 using WPF_Main.Utils;
+using WPF_Main.View;
 
 namespace WPF_Main.ViewModel
 {
     public class InstructionAdderViewModel : ViewModelBase
     {
-        private int _countPages = 1;
         public int CountPages
         {
-            get => _countPages;
+            get => _instructions[_currentIndex].IndexPage;
 
             set
             {
-                if (_countPages == value) return;
-
-                _countPages = value;
+                _instructions[_currentIndex].IndexPage = value;
 
                 RaisePropertyChanged(nameof(CountPages));
             }
         }
 
-        private string _nameContentPage;
         public string NameContentPage
         {
-            get => _nameContentPage;
+            get => _instructions[_currentIndex].Header;
 
             set
             {
-                if(value == _nameContentPage) return;
-
-                _nameContentPage = value;
+                _instructions[_currentIndex].Header = value;
 
                 RaisePropertyChanged(nameof(NameContentPage));
             }
         }
 
-        private Sql_Image _sql_image = new Sql_Image();
         public Sql_Image CurrentImage
         {
-            get => _sql_image;
+            get => _instructions[_currentIndex].Image;
 
             set
             {
-                if(_sql_image.Data == value.Data) return;
+                if(_instructions[_currentIndex].Image.Data == value.Data) return;
 
-                _sql_image = value;
+                _instructions[_currentIndex].Image = value;
 
                 RaisePropertyChanged(nameof(CurrentImage));
 
             }
         }
 
-        private string _description;
         public string Description
         {
-            get => _description;
+            get => _instructions[_currentIndex].Description;
 
             set
             {
-                if (_description == value) return;
-
-                _description = value;
+                _instructions[_currentIndex].Description = value;
 
                 RaisePropertyChanged(nameof(Description));
             }
         }
+
+        private int _currentIndex = 0;
+
+        private List<Instruction> _instructions;
+
+        public InstructionAdderWindow Window { get; set; }
+
+        public InstructionAdderViewModel()
+        {
+            _instructions = new List<Instruction>
+            {
+                new Instruction() { IndexPage = 1 }
+            };
+        }
+
+
 
         public RelayCommand LoadImageFromPath
         {
@@ -104,7 +111,40 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
+                using (error_collectorContext context = new error_collectorContext())
+                {
+                    ModelWindow_QuestionTextBox msg = new ModelWindow_QuestionTextBox();
+                    bool IsAdd = (bool)msg.ShowDialog();
 
+                    if (!IsAdd) return;
+
+                    string instructionName = msg.InstructionName;
+
+                    context.Instructions.Add(new Instructions() { IdUserCreated=1, Name=instructionName, Date_created=DateTime.Now, Date_change = DateTime.Now });
+
+                    context.SaveChanges();
+
+                    int index = context.Instructions.Where(x => x.Name == instructionName).Select(x => x.Id).First();
+
+                    for (int i = 0; i < _instructions.Count; i++)
+                    {
+                        Steps step = new Steps()
+                        {
+                            IdInstructions = index,
+                            Number = _instructions[i].IndexPage,
+                            Header = _instructions[i].Header,
+                            ActionDescription = _instructions[i].Description,
+                            Images = _instructions[i].Image.Data
+                        };
+
+                        context.Steps.Add(step);
+                    }
+
+                    context.SaveChanges();
+
+                    MsgBox.Successfully("Всё успешно добавлено!");
+
+                }
             });
         }
 
@@ -112,7 +152,7 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-
+                Window.DialogResult = false;
             });
         }
 
@@ -121,6 +161,12 @@ namespace WPF_Main.ViewModel
             get => new RelayCommand(() =>
             {
 
+                if((_currentIndex - 1) > -1)
+                {
+                    _currentIndex -= 1;
+                    ChangePage();
+                }
+
             });
         }
 
@@ -128,14 +174,28 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-
+                if((_currentIndex + 1) >= _instructions.Count)
+                {
+                    int index = _instructions[_currentIndex].IndexPage + 1;
+                    _instructions.Add(new Instruction() { IndexPage = index });
+                    _currentIndex += 1;
+                    ChangePage();
+                }
+                else
+                {
+                    _currentIndex += 1;
+                    ChangePage();
+                }
             });
         }
 
 
-        public InstructionAdderViewModel()
+        private void ChangePage()
         {
-
+            RaisePropertyChanged(nameof(CountPages));
+            RaisePropertyChanged(nameof(NameContentPage));
+            RaisePropertyChanged(nameof(CurrentImage));
+            RaisePropertyChanged(nameof(Description));
         }
 
     }
