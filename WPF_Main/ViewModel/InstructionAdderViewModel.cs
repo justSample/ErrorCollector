@@ -120,7 +120,7 @@ namespace WPF_Main.ViewModel
 
                     string instructionName = msg.InstructionName;
 
-                    context.Instructions.Add(new Instructions() { IdUserCreated=1, Name=instructionName, Date_created=DateTime.Now, Date_change = DateTime.Now });
+                    context.Instructions.Add(new Instructions() { IdUserCreated=1, Name=instructionName, DateCreated=DateTime.Now, DateChange = DateTime.Now });
 
                     context.SaveChanges();
 

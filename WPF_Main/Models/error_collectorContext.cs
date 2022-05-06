@@ -33,7 +33,7 @@ namespace WPF_Main.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=localhost;user=root;password=root;database=error_collector;Charset=utf8;");
+                optionsBuilder.UseMySQL("server=127.0.0.1;user=root;password=root;database=error_collector;Charset=utf8;");
             }
         }
 
@@ -55,11 +55,19 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.Cause)
                     .HasColumnName("cause")
-                    .HasColumnType("mediumtext");
+                    .HasColumnType("mediumtext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Comment)
                     .HasColumnName("comment")
-                    .HasColumnType("mediumtext");
+                    .HasColumnType("mediumtext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("date_created")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.IdProgram)
                     .HasColumnName("id_program")
@@ -69,17 +77,19 @@ namespace WPF_Main.Models
                     .HasColumnName("id_user_created")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Images)
-                    .HasColumnName("images")
-                    .HasColumnType("longblob");
+                entity.Property(e => e.Images).HasColumnName("images");
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasMaxLength(300);
+                    .HasColumnType("varchar(300)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Solution)
                     .HasColumnName("solution")
-                    .HasColumnType("mediumtext");
+                    .HasColumnType("mediumtext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.IdProgramNavigation)
                     .WithMany(p => p.Errors)
@@ -105,13 +115,23 @@ namespace WPF_Main.Models
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.DateChange)
+                    .HasColumnName("date_change")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("date_created")
+                    .HasColumnType("datetime");
+
                 entity.Property(e => e.IdUserCreated)
                     .HasColumnName("id_user_created")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasMaxLength(300);
+                    .HasColumnType("varchar(300)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.IdUserCreatedNavigation)
                     .WithMany(p => p.Instructions)
@@ -131,7 +151,9 @@ namespace WPF_Main.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(120);
+                    .HasColumnType("varchar(120)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Steps>(entity =>
@@ -147,19 +169,21 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.ActionDescription)
                     .HasColumnName("action_description")
-                    .HasColumnType("mediumtext");
+                    .HasColumnType("mediumtext")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Header)
                     .HasColumnName("header")
-                    .HasMaxLength(300);
+                    .HasColumnType("varchar(300)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.IdInstructions)
                     .HasColumnName("id_instructions")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Images)
-                    .HasColumnName("images")
-                    .HasColumnType("blob");
+                entity.Property(e => e.Images).HasColumnName("images");
 
                 entity.Property(e => e.Number)
                     .HasColumnName("number")
@@ -182,7 +206,9 @@ namespace WPF_Main.Models
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(90);
+                    .HasColumnType("varchar(90)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             OnModelCreatingPartial(modelBuilder);

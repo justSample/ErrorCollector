@@ -263,7 +263,7 @@ namespace WPF_Main.ViewModel
                     IdProgram = SelectedProgram.Id,
                     IdUserCreated = 1,
                     Name = ErrorName,
-                    Date_Created = DateTime.Now,
+                    DateCreated = DateTime.Now,
                     Cause = CauseError,
                     Solution = SolutionError,
                     Comment = CommentError,
