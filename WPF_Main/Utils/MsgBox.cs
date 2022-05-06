@@ -15,7 +15,14 @@ namespace WPF_Main.Utils
             MessageBox.Show(desc, "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public static void Error(string desc, int numError)
+        /// <summary>
+        /// Номер ошибки:
+        /// 100 - Ошибка на стороне пользователя
+        /// 200 - Ошибка на стороне программы
+        /// </summary>
+        /// <param name="desc"></param>
+        /// <param name="numError"></param>
+        public static void Error(string desc, int numError = 100)
         {
             MessageBox.Show(desc, $"Ошибка: {numError}", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

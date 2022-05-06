@@ -191,6 +191,13 @@ namespace WPF_Main.ViewModel
                     ClearBuffer();
 
                     ImageBuffer.Data = ByteOperation.GetByteFromBuffer();
+
+                    if(ImageBuffer.Data == null)
+                    {
+                        MsgBox.Error("В буфере данных не найдено изображения!\nПопробуйте указать фотографию вручную по пути!");
+                        return;
+                    }
+
                     Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(ImageBuffer.Data));
 
                 });

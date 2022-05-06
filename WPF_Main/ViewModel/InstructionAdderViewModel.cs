@@ -103,7 +103,14 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-                CurrentImage = ByteOperation.GetImage(ByteOperation.GetByteFromBuffer());
+                try
+                {
+                    CurrentImage = ByteOperation.GetImage(ByteOperation.GetByteFromBuffer());
+                }
+                catch
+                {
+                    MsgBox.Error("В буфере данных не найдено изображения!\nПопробуйте указать фотографию вручную по пути!");
+                }
             });
         }
 
