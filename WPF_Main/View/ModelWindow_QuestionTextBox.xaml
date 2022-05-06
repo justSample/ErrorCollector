@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:WPF_Main.View"
         mc:Ignorable="d"
         Title="Название инструкции" 
-        Height="100" 
-        Width="250"
+        Height="150" 
+        Width="350"
         
         WindowStartupLocation="CenterScreen"
         WindowStyle="ToolWindow"
@@ -59,7 +59,7 @@
             <RowDefinition Height="0.4*"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="txtBox_NameInstruction" Margin="2,15" Grid.Row="0" Style="{StaticResource MyWaterMarkStyle}" FontSize="12" Tag="Название инструкции"/>
+        <TextBox x:Name="txtBox_NameInstruction" Margin="2,15" Grid.Row="0" Style="{StaticResource MyWaterMarkStyle}" FontSize="18" Tag="Название инструкции"/>
 
         <Grid Grid.Row="1">
 
