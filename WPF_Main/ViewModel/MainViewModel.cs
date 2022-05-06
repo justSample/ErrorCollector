@@ -30,6 +30,7 @@ namespace WPF_Main.ViewModel
     public class MainViewModel : ViewModelBase
     {
         //Scaffold-DbContext -provider MySql.Data.EntityFrameworkCore -connection "server=localhost;user=root;password=root;database=error_collector;" -OutputDir Models -f
+        //Scaffold-DbContext -provider Pomelo.EntityFrameworkCore.MySql -connection "server=localhost;user=root;password=root;database=error_collector;" -OutputDir Models -f // - Это делает чтоб столбцы с datetime тоже были
         //Если будут ????? вместо российских символов, то юзаем это: Charset=utf8;
         //"server=localhost;user=root;password=root;database=error_collector;Charset=utf8;"
 
