@@ -11,6 +11,7 @@ namespace WPF_Main.Models
     {
         public Instructions()
         {
+            ErrorsInstructions = new HashSet<ErrorsInstructions>();
             Steps = new HashSet<Steps>();
         }
 
@@ -21,6 +22,7 @@ namespace WPF_Main.Models
         public DateTime DateChange { get; set; }
 
         public virtual Users IdUserCreatedNavigation { get; set; }
+        public virtual ICollection<ErrorsInstructions> ErrorsInstructions { get; set; }
         public virtual ICollection<Steps> Steps { get; set; }
     }
 }

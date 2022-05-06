@@ -245,6 +245,12 @@
                 </Border>
                 <ListView Grid.Row="1" Margin="1" Background="#6D1B90" ItemsSource="{Binding BtnInstructions}">
 
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Привязать ошибку" Command="{Binding BindInstruction}"/>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -254,7 +260,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Button Content="{Binding Name}" Command="{Binding OpenInstruction}"/>
+                                <Button FontSize="18" Content="{Binding Name}" Command="{Binding OpenInstruction}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

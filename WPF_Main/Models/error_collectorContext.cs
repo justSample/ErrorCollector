@@ -20,6 +20,7 @@ namespace WPF_Main.Models
         }
 
         public virtual DbSet<Errors> Errors { get; set; }
+        public virtual DbSet<ErrorsInstructions> ErrorsInstructions { get; set; }
         public virtual DbSet<Instructions> Instructions { get; set; }
         public virtual DbSet<Programs> Programs { get; set; }
         public virtual DbSet<Steps> Steps { get; set; }
@@ -102,6 +103,41 @@ namespace WPF_Main.Models
                     .HasForeignKey(d => d.IdUserCreated)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fkey_id_user");
+            });
+
+            modelBuilder.Entity<ErrorsInstructions>(entity =>
+            {
+                entity.ToTable("errors_instructions");
+
+                entity.HasIndex(e => e.IdError)
+                    .HasName("fk_error_idx");
+
+                entity.HasIndex(e => e.IdInstruction)
+                    .HasName("fk_instruction_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IdError)
+                    .HasColumnName("id_error")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IdInstruction)
+                    .HasColumnName("id_instruction")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.IdErrorNavigation)
+                    .WithMany(p => p.ErrorsInstructions)
+                    .HasForeignKey(d => d.IdError)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_error");
+
+                entity.HasOne(d => d.IdInstructionNavigation)
+                    .WithMany(p => p.ErrorsInstructions)
+                    .HasForeignKey(d => d.IdInstruction)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_instruction");
             });
 
             modelBuilder.Entity<Instructions>(entity =>
@@ -192,7 +228,6 @@ namespace WPF_Main.Models
                 entity.HasOne(d => d.IdInstructionsNavigation)
                     .WithMany(p => p.Steps)
                     .HasForeignKey(d => d.IdInstructions)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fkey_id_inst");
             });
 

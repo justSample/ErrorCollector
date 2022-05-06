@@ -9,6 +9,11 @@ namespace WPF_Main.Models
 {
     public partial class Errors
     {
+        public Errors()
+        {
+            ErrorsInstructions = new HashSet<ErrorsInstructions>();
+        }
+
         public int Id { get; set; }
         public int IdProgram { get; set; }
         public int IdUserCreated { get; set; }
@@ -21,5 +26,6 @@ namespace WPF_Main.Models
 
         public virtual Programs IdProgramNavigation { get; set; }
         public virtual Users IdUserCreatedNavigation { get; set; }
+        public virtual ICollection<ErrorsInstructions> ErrorsInstructions { get; set; }
     }
 }

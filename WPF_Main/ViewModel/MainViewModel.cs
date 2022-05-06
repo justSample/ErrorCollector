@@ -37,12 +37,13 @@ namespace WPF_Main.ViewModel
 
         public ObservableCollection<Programs> Programs { get; set; }
 
+        public ObservableCollection<InstructionPrefab> BtnInstructions { get; set; }
+
         private Programs _selectedProgram;
         public Programs SelectedProgram
         {
             get => _selectedProgram;
             
-
             set
             {
                 if (_selectedProgram == value) return;
@@ -71,10 +72,6 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private List<Errors> _bufferErrors;
-
-        public ObservableCollection<InstructionPrefab> BtnInstructions { get; set; }
-
         private Errors _selectedError;
         public Errors SelectedError
         {
@@ -96,6 +93,18 @@ namespace WPF_Main.ViewModel
                     if (data != null)
                         Images = new ObservableCollection<Sql_Image>(ByteOperation.GetImages(data));
 
+                    int[] idsInstructions = context.ErrorsInstructions.Where(x => x.IdError == error.Id).Select(x => x.IdInstruction).ToArray();
+
+                    List<Instructions> instructions = new List<Instructions>();
+
+                    for (int i = 0; i < idsInstructions.Length; i++)
+                    {
+                        instructions.Add(context.Instructions.Where(x => x.Id == idsInstructions[i]).Single());
+                    }
+
+                    InitInstructions(instructions.ToArray());
+
+                    instructions.Clear();
                 }
 
                 RaisePropertyChanged(nameof(SelectedError));
@@ -134,7 +143,6 @@ namespace WPF_Main.ViewModel
         }
 
         private string _searchErrorText;
-
         public string SearchErrorText
         {
 
@@ -148,6 +156,23 @@ namespace WPF_Main.ViewModel
                 Search();
             }
         }
+
+
+        private List<Errors> _bufferErrors;
+
+
+
+        public MainViewModel()
+        {
+            using(error_collectorContext context = new error_collectorContext())
+            {
+                User = context.Users.FirstAsync().Result;
+                Programs = new ObservableCollection<Programs>(context.Programs.ToList());
+                BtnInstructions = new ObservableCollection<InstructionPrefab>();
+            }
+            
+        }
+
 
         public RelayCommand OpenWindowCreateError
         {
@@ -171,10 +196,10 @@ namespace WPF_Main.ViewModel
                     if (SelectedError == null) return;
 
                     DialogResult result = Utils.MsgBox.Question($"Вы хотите удалить: {SelectedError.Name}?");
-                    
-                    if(result == DialogResult.No) return;
 
-                    using(error_collectorContext context = new error_collectorContext())
+                    if (result == DialogResult.No) return;
+
+                    using (error_collectorContext context = new error_collectorContext())
                     {
                         var error = context.Errors.Where(e => e.Id == SelectedError.Id).First();
                         context.Errors.Remove(error);
@@ -193,13 +218,13 @@ namespace WPF_Main.ViewModel
                 return new RelayCommand(() =>
                 {
                     View.ErrorAdder viewError = new View.ErrorAdder(SelectedError);
-                    
+
                     viewError.ShowDialog();
                 });
             }
         }
 
-        public RelayCommand AddNewInstruction 
+        public RelayCommand AddNewInstruction
         {
             get => new RelayCommand(() =>
             {
@@ -207,22 +232,17 @@ namespace WPF_Main.ViewModel
             });
         }
 
-        public MainViewModel()
+        public RelayCommand BindInstruction
         {
-            using(error_collectorContext context = new error_collectorContext())
+            get => new RelayCommand(() =>
             {
-                User = context.Users.FirstAsync().Result;
-                Programs = new ObservableCollection<Programs>(context.Programs.ToList());
-                InitInstructions(context.Instructions.ToArray());
 
-            }
-            
+            });
         }
 
         private void InitInstructions(Instructions[] instructions)
         {
-            BtnInstructions = new ObservableCollection<InstructionPrefab>();
-
+            BtnInstructions.Clear();
             for (int i = 0; i < instructions.Length; i++)
             {
                 BtnInstructions.Add(new InstructionPrefab(instructions[i]));
