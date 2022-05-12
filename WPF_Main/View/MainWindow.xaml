@@ -73,8 +73,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Margin="2,0" Grid.Column="0" Text="Пользователь:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="1" Text="{Binding User.Name}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <!--Думал сначала чтоб сделать пользователей, но чёт пока нет реализации-->
+                <!--<TextBlock Margin="2,0" Grid.Column="0" Text="Пользователь:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="1" Text="{Binding User.Name}" VerticalAlignment="Center" HorizontalAlignment="Left"/>-->
 
             </Grid>
 
