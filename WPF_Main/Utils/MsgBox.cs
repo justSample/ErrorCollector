@@ -32,6 +32,11 @@ namespace WPF_Main.Utils
             MessageBox.Show(desc, "Хорошее сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Выходит окошко с вопросом о том, что делать. Возвращает Yes или No соответственно.
+        /// </summary>
+        /// <param name="desc">Сам вопрос который нужно задать</param>
+        /// <returns></returns>
         public static DialogResult Question(string desc)
         {
             return MessageBox.Show(desc, "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

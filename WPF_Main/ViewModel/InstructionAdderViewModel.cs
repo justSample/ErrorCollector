@@ -206,12 +206,15 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-
                 if(_instructions.Count - 1 <= 0)
                 {
                     MsgBox.Warning("Нельзя удалить последнюю страницу");
                     return;
                 }
+
+                var result = MsgBox.Question("Вы точно хотите удалить страницу? Вся информация будет потеряна");
+
+                if (result != DialogResult.Yes) return;
 
                 _instructions.RemoveAt(_currentIndex);
 
