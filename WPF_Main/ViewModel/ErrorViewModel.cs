@@ -20,32 +20,30 @@ namespace WPF_Main.ViewModel
         private string _btnAddName;
         public string BtnAddName
         {
-            get { return _btnAddName; }
+            get => _btnAddName; 
+
             set
             {
                 _btnAddName = value;
+
                 RaisePropertyChanged(nameof(BtnAddName));
             }
         }
 
         public Action CloseAction { get; set; }
-
         private Action ErrorAction { get; set; }
-
-
 
         private Programs _seletedProgram;
         public Programs SelectedProgram
         {
-            get
-            {
-                return _seletedProgram;
-            }
-
+            get => _seletedProgram;
+            
             set
             {
                 if (value == _seletedProgram) return;
+
                 _seletedProgram = value;
+
                 RaisePropertyChanged(nameof(SelectedProgram));
             }
         }
@@ -53,16 +51,14 @@ namespace WPF_Main.ViewModel
         private string _errorName;
         public string ErrorName
         {
-            get
-            {
-                return _errorName;
-            }
-
+            get => _errorName;
+            
             set
             {
                 if(value == _errorName) return;
 
                 _errorName = value;
+
                 RaisePropertyChanged(nameof(ErrorName));
             }
         }
@@ -70,11 +66,8 @@ namespace WPF_Main.ViewModel
         private string _causeError;
         public string CauseError
         {
-            get
-            {
-                return _causeError;
-            }
-
+            get => _causeError;
+            
             set
             {
                 if(value ==_causeError) return;
@@ -88,11 +81,8 @@ namespace WPF_Main.ViewModel
         private string _solutionError;
         public string SolutionError
         {
-            get
-            {
-                return _solutionError;
-            }
-
+            get => _solutionError;
+            
             set
             {
                 if( value == _solutionError) return;
@@ -106,11 +96,8 @@ namespace WPF_Main.ViewModel
         private string _commentError;
         public string CommentError
         {
-            get
-            {
-                return _commentError;
-            }
-
+            get => _commentError;
+            
             set
             {
                 if( _commentError == value) return;
@@ -124,38 +111,49 @@ namespace WPF_Main.ViewModel
         private ObservableCollection<Programs> _programs;
         public ObservableCollection<Programs> Programs
         {
-            get
-            {
-                return _programs;
-            }
-
+            get => _programs;
+            
             set
             {
                 if (value == null || _programs == value) return;
 
                 _programs = value;
-                RaisePropertyChanged(nameof(Programs));
 
+                RaisePropertyChanged(nameof(Programs));
             }
         }
 
         private ObservableCollection<Sql_Image> _images;
         public ObservableCollection<Sql_Image> Images
         {
-            get
-            {
-                return this._images;
-            }
-
+            get => this._images;
+            
             set
             {
                 if (_images == value) return;
+
                 _images = value;
+
                 RaisePropertyChanged(nameof(Images));
             }
         }
 
         private Utils.Buffer ImageBuffer;
+
+        private int _idError = -1;
+
+
+        public ErrorViewModel()
+        {
+            using (error_collectorContext context = new error_collectorContext())
+            {
+                Programs = new ObservableCollection<Programs>(context.Programs.ToArray());
+                BtnAddName = "Добавить ошибку";
+                ErrorAction = new Action(AddErrorMethod);
+            }
+        }
+
+
 
         public RelayCommand SetImage
         {
@@ -163,7 +161,7 @@ namespace WPF_Main.ViewModel
             {
                 return new RelayCommand(() =>
                 {
-                    using(OpenFileDialog openFileDialog = new OpenFileDialog())
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
                     {
                         openFileDialog.Title = "Выбор изображений";
                         openFileDialog.Filter = "Png (*.png)|*.png|Jpg (*.jpg)|*.jpg|All files(*.*)|*.*";
@@ -186,13 +184,13 @@ namespace WPF_Main.ViewModel
         {
             get
             {
-                return new RelayCommand(() => 
+                return new RelayCommand(() =>
                 {
                     ClearBuffer();
 
                     ImageBuffer.Data = ByteOperation.GetByteFromBuffer();
 
-                    if(ImageBuffer.Data == null)
+                    if (ImageBuffer.Data == null)
                     {
                         MsgBox.Error("В буфере данных не найдено изображения!\nПопробуйте указать фотографию вручную по пути!");
                         return;
@@ -216,27 +214,15 @@ namespace WPF_Main.ViewModel
             }
         }
 
-        private int _idError = -1;
-        
         //Есть ли утечка памяти?
         public RelayCommand CloseWindow
         {
-            get 
-            { 
-                return new RelayCommand(() => 
+            get
+            {
+                return new RelayCommand(() =>
                 {
                     CloseAction?.Invoke();
-                }); 
-            }
-        }
-
-        public ErrorViewModel()
-        {
-            using (error_collectorContext context = new error_collectorContext())
-            {
-                Programs = new ObservableCollection<Programs>(context.Programs.ToArray());
-                BtnAddName = "Добавить ошибку";
-                ErrorAction = new Action(AddErrorMethod);
+                });
             }
         }
 
