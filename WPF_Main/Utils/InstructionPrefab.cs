@@ -25,11 +25,19 @@ namespace WPF_Main.Utils
             get => new RelayCommand(_showDialog);
         }
 
+        public RelayCommand<Errors> UnBindInstruction
+        {
+            get => new RelayCommand<Errors>(UnBind);
+        }
+
         private Action _showDialog;
+        private int _idInstruction;
 
         public InstructionPrefab(Instructions instruction)
         {
             Name = instruction.Name;
+            _idInstruction = instruction.Id;
+
             _showDialog = () =>
             {
                 var inst = new InstructionViewer();
@@ -38,7 +46,27 @@ namespace WPF_Main.Utils
 
                 inst.ShowDialog();
             };
+
         }
+
+        private void UnBind(Errors error)
+        {
+            using(error_collectorContext context = new error_collectorContext())
+            {
+                var toDelete = context.ErrorsInstructions.Where(x => x.IdError == error.Id && x.IdInstruction == _idInstruction).Single();
+
+                context.ErrorsInstructions.Remove(toDelete);
+
+                context.SaveChanges();
+
+                MsgBox.Successfully("Отвязка успешно завершена!");
+
+                
+
+            }
+        }
+
+
 
     }
 }

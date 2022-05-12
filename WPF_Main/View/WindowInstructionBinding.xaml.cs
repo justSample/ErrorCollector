@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_Main.ViewModel;
 
 namespace WPF_Main.View
 {
@@ -22,6 +23,19 @@ namespace WPF_Main.View
         public WindowInstructionBinding()
         {
             InitializeComponent();
+            InitEvents();
+        }
+
+        public WindowInstructionBinding(int idError)
+        {
+            InitializeComponent();
+            ((InstructionBindingViewModel)this.DataContext).IdError = idError;
+            InitEvents();
+        }
+
+        private void InitEvents()
+        {
+            ((InstructionBindingViewModel)this.DataContext).CloseAction = this.Close;
         }
     }
 }

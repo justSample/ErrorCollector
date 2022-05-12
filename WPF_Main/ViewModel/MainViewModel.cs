@@ -103,7 +103,7 @@ namespace WPF_Main.ViewModel
                         instructions.Add(context.Instructions.Where(x => x.Id == idsInstructions[i]).Single());
                     }
 
-                    InitInstructions(instructions.ToArray());
+                    LoadInstructions(instructions.ToArray());
 
                     instructions.Clear();
                 }
@@ -158,10 +158,7 @@ namespace WPF_Main.ViewModel
             }
         }
 
-
         private List<Errors> _bufferErrors;
-
-
 
         public MainViewModel()
         {
@@ -237,11 +234,22 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
+                if (SelectedError == null) return;
+
+                WindowInstructionBinding binding = new WindowInstructionBinding(SelectedError.Id);
+                binding.ShowDialog();
+            });
+        }
+
+        public RelayCommand UnBindInstruction
+        {
+            get => new RelayCommand(() =>
+            {
 
             });
         }
 
-        private void InitInstructions(Instructions[] instructions)
+        private void LoadInstructions(Instructions[] instructions)
         {
             BtnInstructions.Clear();
             for (int i = 0; i < instructions.Length; i++)

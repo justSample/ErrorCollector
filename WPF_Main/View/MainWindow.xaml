@@ -260,7 +260,13 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Button FontSize="18" Content="{Binding Name}" Command="{Binding OpenInstruction}"/>
+                                <Button FontSize="18" Content="{Binding Name}" Command="{Binding OpenInstruction}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Отвязать" Command="{Binding UnBindInstruction}" CommandParameter="{Binding Source={StaticResource Locator}, Path=Main.SelectedError}"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

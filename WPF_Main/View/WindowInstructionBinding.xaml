@@ -57,7 +57,7 @@
             
         </Grid>
         
-        <ListView Grid.Row="1" Margin="0,2,0,0" ItemsSource="{Binding Instructions}">
+        <ListView Grid.Row="1" Margin="0,2,0,0" ItemsSource="{Binding Instructions}" SelectedItem="{Binding SelectedInstruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -80,8 +80,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Привязать"/>
-            <Button Grid.Column="1" Content="Отмена"/>
+            <Button Grid.Column="0" Content="Привязать" Command="{Binding BindingInstruction}"/>
+            <Button Grid.Column="1" Content="Закрыть" Command="{Binding Close}"/>
 
         </Grid>
         
