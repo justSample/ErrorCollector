@@ -61,12 +61,9 @@ namespace WPF_Main.Utils
 
                 MsgBox.Successfully("Отвязка успешно завершена!");
 
-                
-
+                Events.EventsHandler.RaiseUpdateBindingInstruction();
             }
         }
-
-
 
     }
 }

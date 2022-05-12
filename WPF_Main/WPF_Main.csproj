@@ -334,6 +334,7 @@
     <Compile Include="Models\Users.cs" />
     <Compile Include="Utils\Buffer.cs" />
     <Compile Include="Utils\ByteOperation.cs" />
+    <Compile Include="Utils\Events\EventsHandler.cs" />
     <Compile Include="Utils\Instruction.cs" />
     <Compile Include="Utils\InstructionPrefab.cs" />
     <Compile Include="Utils\MsgBox.cs" />

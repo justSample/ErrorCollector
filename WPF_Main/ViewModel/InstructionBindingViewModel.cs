@@ -62,6 +62,8 @@ namespace WPF_Main.ViewModel
                     context.SaveChanges();
 
                     MsgBox.Successfully("Успешная привязка!");
+
+                    Utils.Events.EventsHandler.RaiseUpdateBindingInstruction();
                 }
             });
         }
