@@ -135,7 +135,7 @@
                 <Button Margin="0,5" Content="Добавить изображения" FontSize="16" Command="{Binding SetImage}"/>
             </Grid>
             <Grid Grid.Row="6">
-                <Button Margin="0,5" Content="Добавить из буфера" FontSize="16" Command="{Binding SetImageFromBuffer}"/>
+                <Button Margin="0,5" Content="Добавить изображение из буфера" FontSize="16" Command="{Binding SetImageFromBuffer}"/>
             </Grid>
 
             

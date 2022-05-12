@@ -127,12 +127,25 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Добавить инструкцию" FontSize="12" Command="{Binding SaveInstruction}"/>
-            <Button Grid.Column="1" Content="Закрыть и не сохранять" FontSize="12" Command="{Binding NotSaveAndClose}"/>
-            <Button Grid.Column="2" Content="Left" FontSize="12" Command="{Binding BackPage}"/>
-            <Button Grid.Column="3" Content="Rigth" FontSize="12" Command="{Binding NextPage}"/>
+
+            <Button Grid.Column="0" FontSize="12" Command="{Binding SaveInstruction}">
+                <AccessText Text="Добавить инструкцию" TextWrapping="Wrap"/>
+            </Button>
+            <Button Grid.Column="1" FontSize="12" Command="{Binding NotSaveAndClose}">
+                <AccessText Text="Закрыть и не сохранять" TextWrapping="Wrap"/>
+            </Button>
+            <Button Grid.Column="2" Content="Влево" FontSize="12" Command="{Binding BackPage}"/>
+            <Button Grid.Column="3" Content="Вправо" FontSize="12" Command="{Binding NextPage}"/>
+            <Button Grid.Column="4" FontSize="12" Command="{Binding NewPage}">
+                <AccessText Text="Добавить страницу" TextWrapping="Wrap"/>
+            </Button>
+            <Button Grid.Column="5" FontSize="12" Command="{Binding DeletePage}">
+                <AccessText Text="Удалить страницу" TextWrapping="Wrap"/>
+            </Button>
 
         </Grid>
 

@@ -181,14 +181,7 @@ namespace WPF_Main.ViewModel
         {
             get => new RelayCommand(() =>
             {
-                if((_currentIndex + 1) >= _instructions.Count)
-                {
-                    int index = _instructions[_currentIndex].IndexPage + 1;
-                    _instructions.Add(new Instruction() { IndexPage = index });
-                    _currentIndex += 1;
-                    ChangePage();
-                }
-                else
+                if ((_currentIndex + 1) < _instructions.Count)
                 {
                     _currentIndex += 1;
                     ChangePage();
@@ -196,6 +189,44 @@ namespace WPF_Main.ViewModel
             });
         }
 
+        public RelayCommand NewPage
+        {
+            get => new RelayCommand(() =>
+            {
+                
+                int index = _instructions.Count + 1;
+                _instructions.Add(new Instruction() { IndexPage = index });
+                _currentIndex = _instructions.Count - 1;
+                ChangePage();
+
+            });
+        }
+
+        public RelayCommand DeletePage
+        {
+            get => new RelayCommand(() =>
+            {
+
+                if(_instructions.Count - 1 <= 0)
+                {
+                    MsgBox.Warning("Нельзя удалить последнюю страницу");
+                    return;
+                }
+
+                _instructions.RemoveAt(_currentIndex);
+
+                for (int i = _currentIndex; i < _instructions.Count; i++)
+                {
+                    _instructions[i].IndexPage = (i + 1);
+                }
+
+                if (_currentIndex >= _instructions.Count)
+                    _currentIndex -= 1;
+
+                ChangePage();
+
+            });
+        }
 
         private void ChangePage()
         {

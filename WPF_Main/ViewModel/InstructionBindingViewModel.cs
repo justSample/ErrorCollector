@@ -18,7 +18,17 @@ namespace WPF_Main.ViewModel
 
         public Action CloseAction;
 
-        public ObservableCollection<Instructions> Instructions { get; set; }
+        private ObservableCollection<Instructions> _instructions;
+        public ObservableCollection<Instructions> Instructions
+        {
+            get => _instructions;
+
+            set
+            {
+                _instructions = value;
+                RaisePropertyChanged(nameof(Instructions));
+            }
+        }
 
         private Instructions _selectedInstruction;
         public Instructions SelectedInstruction
@@ -32,7 +42,24 @@ namespace WPF_Main.ViewModel
             }
         }
 
+        private string _searchErrorText;
+        public string SearchErrorText
+        {
+
+            get => _searchErrorText;
+
+            set
+            {
+                if (value == _searchErrorText) return;
+
+                _searchErrorText = value;
+                Search();
+            }
+        }
+
         public int IdError { get; set; }
+
+        private List<Instructions> _bufferInstructions;
 
         public InstructionBindingViewModel()
         {
@@ -75,14 +102,20 @@ namespace WPF_Main.ViewModel
                 CloseAction?.Invoke();
             });
         }
-            
 
+        
         private void LoadInstruction()
         {
             using (error_collectorContext context = new error_collectorContext())
             {
                 Instructions = new ObservableCollection<Instructions>(context.Instructions.ToArray());
+                _bufferInstructions = new List<Instructions>(Instructions);
             }
+        }
+
+        private void Search()
+        {
+            Instructions = new ObservableCollection<Instructions>(_bufferInstructions.Where(e => e.Name.ToLower().Contains(SearchErrorText.ToLower())));
         }
 
     }
