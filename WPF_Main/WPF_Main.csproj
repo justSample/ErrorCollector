@@ -343,12 +343,16 @@
     <Compile Include="ViewModel\InstructionBindingViewModel.cs" />
     <Compile Include="ViewModel\InstructionViewerViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ProgramAdderViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\InstructionViewer.xaml.cs">
       <DependentUpon>InstructionViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ModelWindow_QuestionTextBox.xaml.cs">
       <DependentUpon>ModelWindow_QuestionTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProgramAdder.xaml.cs">
+      <DependentUpon>ProgramAdder.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WindowInstructionBinding.xaml.cs">
       <DependentUpon>WindowInstructionBinding.xaml</DependentUpon>
@@ -392,6 +396,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ModelWindow_QuestionTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProgramAdder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
