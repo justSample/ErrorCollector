@@ -131,7 +131,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-
+            
             <Button Grid.Column="0" FontSize="12" Command="{Binding SaveInstruction}">
                 <AccessText Text="Добавить инструкцию" TextWrapping="Wrap"/>
             </Button>

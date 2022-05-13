@@ -116,8 +116,8 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Grid.ColumnSpan="2" Content="Закрыть" FontSize="24" Command="{Binding Close}"/>
-            <Button Grid.Column="2" Content="Left" FontSize="12" Command="{Binding BackPage}"/>
-            <Button Grid.Column="3" Content="Rigth" FontSize="12" Command="{Binding NextPage}"/>
+            <Button Grid.Column="2" Content="Влево" FontSize="24" Command="{Binding BackPage}"/>
+            <Button Grid.Column="3" Content="Вправо" FontSize="24" Command="{Binding NextPage}"/>
 
         </Grid>
 

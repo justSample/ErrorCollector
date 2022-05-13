@@ -68,15 +68,15 @@ namespace WPF_Main.ViewModel
 
         private int _currentIndex = 0;
 
-        private List<Instruction> _instructions;
+        private List<BufferInstruction> _instructions;
 
         public InstructionAdderWindow Window { get; set; }
 
         public InstructionAdderViewModel()
         {
-            _instructions = new List<Instruction>
+            _instructions = new List<BufferInstruction>
             {
-                new Instruction() { IndexPage = 1 }
+                new BufferInstruction() { IndexPage = 1 }
             };
         }
 
@@ -195,7 +195,7 @@ namespace WPF_Main.ViewModel
             {
                 
                 int index = _instructions.Count + 1;
-                _instructions.Add(new Instruction() { IndexPage = index });
+                _instructions.Add(new BufferInstruction() { IndexPage = index });
                 _currentIndex = _instructions.Count - 1;
                 ChangePage();
 

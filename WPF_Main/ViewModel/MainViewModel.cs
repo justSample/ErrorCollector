@@ -39,7 +39,7 @@ namespace WPF_Main.ViewModel
         public ObservableCollection<Programs> Programs { get; set; }
 
 
-        public ObservableCollection<InstructionPrefab> BtnInstructions { get; set; }
+        public ObservableCollection<InstructionShowerPrefab> BtnInstructions { get; set; }
 
         private Programs _selectedProgram;
         public Programs SelectedProgram
@@ -156,11 +156,10 @@ namespace WPF_Main.ViewModel
             {
                 User = context.Users.FirstAsync().Result;
                 Programs = new ObservableCollection<Programs>(context.Programs.ToList());
-                BtnInstructions = new ObservableCollection<InstructionPrefab>();
+                BtnInstructions = new ObservableCollection<InstructionShowerPrefab>();
             }
 
             SetsEvents();
-
 
         }
 
@@ -234,15 +233,6 @@ namespace WPF_Main.ViewModel
                 
             });
         }
-
-        public RelayCommand UnBindInstruction
-        {
-            get => new RelayCommand(() =>
-            {
-
-            });
-        }
-
         
         private void LoadInstructions()
         {
@@ -253,7 +243,7 @@ namespace WPF_Main.ViewModel
 
                 for (int i = 0; i < idsInstructions.Length; i++)
                 {
-                    BtnInstructions.Add(new InstructionPrefab(context.Instructions.Where(x => x.Id == idsInstructions[i]).Single()));
+                    BtnInstructions.Add(new InstructionShowerPrefab(context.Instructions.Where(x => x.Id == idsInstructions[i]).Single()));
                 }
             }
         }

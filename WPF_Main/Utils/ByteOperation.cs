@@ -10,6 +10,9 @@ using WPF_Main.Models;
 
 namespace WPF_Main.Utils
 {
+    /// <summary>
+    /// Класс для работы с байтами. В основном с байтами изображений
+    /// </summary>
     public static class ByteOperation
     {
 
@@ -86,7 +89,6 @@ namespace WPF_Main.Utils
 
         public static byte[] GetByteFromBuffer()
         {
-
             List<byte> vs = new List<byte>();
 
             var image = Clipboard.GetImage();
@@ -130,7 +132,6 @@ namespace WPF_Main.Utils
 
         public static byte[] GetByteImage(string path)
         {
-
             List<byte> vs = new List<byte>();
 
             byte[] dataCountImages = BitConverter.GetBytes(1);

@@ -67,13 +67,13 @@ namespace WPF_Main.ViewModel
 
         private int _currentIndex = 0;
 
-        private List<Instruction> _instructions;
+        private List<BufferInstruction> _instructions;
 
         public InstructionViewer Window { get; set; }
 
         public InstructionViewerViewModel()
         {
-            _instructions = new List<Instruction>();
+            _instructions = new List<BufferInstruction>();
         }
 
         public void SetInstruction(Instructions instruction)
@@ -86,7 +86,7 @@ namespace WPF_Main.ViewModel
 
                 for (int i = 0; i < steps.Length; i++)
                 {
-                    _instructions.Add(new Instruction());
+                    _instructions.Add(new BufferInstruction());
                     _instructions[i].SetFromStep(steps[i]);
                 }
             }
