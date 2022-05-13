@@ -62,7 +62,7 @@
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Image  Source="pack://application:,,,/Content/Images/Icons/kit_tool_icon_217215.png"/>
-                    <TextBlock Text="Error collector v 0.0.1"/>
+                    <TextBlock Text="Error collector v 0.1.0"/>
                 </StackPanel>
             </Grid>
             
