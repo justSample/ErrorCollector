@@ -15,7 +15,7 @@
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         
-        DataContext="{Binding Source={StaticResource Locator}, Path=InstructionAdder}"
+        DataContext="{Binding Source={StaticResource Locator}, Path=ProgramAdder}"
         >
 
     <Window.Resources>
@@ -79,11 +79,11 @@
 
             <TextBlock Grid.Row="0" Text="Список всех программ" Style="{StaticResource BlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <TextBox Grid.Row="1" Text="{Binding NameContentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="От сюда добавлять и изменять названия"/>
+            <TextBox Grid.Row="1" Text="{Binding NameProgram, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ResourceKey=MyWaterMarkStyle}" Tag="От сюда добавлять и изменять названия"/>
 
         </Grid>
         
-        <ListView Grid.Row="1" Margin="0,2,0,0" ItemsSource="{Binding Instructions}" SelectedItem="{Binding SelectedInstruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <ListView Grid.Row="1" Margin="0,2,0,0" ItemsSource="{Binding Programs}" SelectedItem="{Binding SelectedInstruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -108,10 +108,10 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Добавить" Command="{Binding}"/>
-            <Button Grid.Column="1" Content="Изменить" Command="{Binding}"/>
-            <Button Grid.Column="2" Content="Удалить"  Command="{Binding}"/>
-            <Button Grid.Column="3" Content="Выйти"    Command="{Binding}"/>
+            <Button Grid.Column="0" Content="Добавить" Command="{Binding AddProgram}"/>
+            <Button Grid.Column="1" Content="Изменить" Command="{Binding ChangeProgram}"/>
+            <Button Grid.Column="2" Content="Удалить"  Command="{Binding DeleteProgram}"/>
+            <Button Grid.Column="3" Content="Выйти"    Command="{Binding Exit}"/>
 
         </Grid>
         
